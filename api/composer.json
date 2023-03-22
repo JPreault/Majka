@@ -1,0 +1,26 @@
+{
+    "name": "jose/api",
+    "require": {
+        "guzzlehttp/psr7": "^1.8",
+        "http-interop/response-sender": "^1.0",
+        "http-interop/http-factory-guzzle": "^1.2",
+        "league/route": "^5.1",
+        "doctrine/orm": "^2.11",
+        "doctrine/dbal": "^3.3",
+        "doctrine/annotations": "^1.13",
+        "vlucas/phpdotenv": "^5.4",
+        "hackzilla/password-generator": "^1.6",
+        "doctrine/cache": "^1.11",
+        "respect/validation": "^2.2",
+        "matomo/device-detector": "^4.2",
+        "firebase/php-jwt": "^6.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Core\\" : "Core",
+            "Model\\" : "Model",
+            "Utils\\" : "Utils",
+            "Config\\" : "config"
+        }
+    }
+}
