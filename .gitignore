@@ -6,6 +6,7 @@
 /api/composer.lock
 /api/vendor
 /.pnp
+/src2
 
 .pnp.js
 .vscode
