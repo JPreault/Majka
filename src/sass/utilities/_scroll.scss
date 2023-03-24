@@ -1,0 +1,64 @@
+.scrollOnY {
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-color: rgba(var(--clr-input-secondary-bg)) transparent;
+    scrollbar-width: 20px;
+
+    @media not all and (min-resolution: 0.001dpcm) {
+        overflow-y: scroll;
+    }
+
+    &:hover{
+        scrollbar-color: rgba(var(--clr-input-secondary-bg-focus)) transparent;
+    }
+    &::-webkit-scrollbar {
+        width: 14px;
+    }
+    &::-webkit-scrollbar-thumb {
+        border: 3px solid transparent;
+        border-radius: 10px;
+        background-color: transparent!important;
+        box-shadow: inset 0px 0px 100px rgba(var(--clr-input-secondary-bg));
+        &:hover {
+            box-shadow: inset 0px 0px 100px rgba(var(--clr-input-secondary-bg-focus));
+        }
+    }
+
+    &.scrollBarOut{
+        padding-right: 14px;
+    }
+
+    &.andScrollX{
+        overflow-x: auto;
+    }
+}
+
+.scrollOnX {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-color: rgba(var(--clr-input-secondary-bg)) transparent;
+    scrollbar-width: 20px;
+    &:hover{
+        scrollbar-color: rgba(var(--clr-input-secondary-bg-focus)) transparent;
+    }
+    &::-webkit-scrollbar {
+        width: 14px;
+    }
+    &::-webkit-scrollbar-thumb {
+        border: 3px solid transparent;
+        border-radius: 10px;
+        background-color: transparent!important;
+        box-shadow: inset 0px 0px 100px rgba(var(--clr-input-secondary-bg));
+        &:hover {
+            box-shadow: inset 0px 0px 100px rgba(var(--clr-input-secondary-bg-focus));
+        }
+    }
+
+    &.scrollBarOut{
+        padding-right: 14px;
+    }
+
+    &.andScrollY{
+        overflow-x: auto;
+    }
+}
