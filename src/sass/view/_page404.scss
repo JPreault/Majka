@@ -1,0 +1,25 @@
+.container__notfound{
+    width: 100vw;
+    height: calc(var(--doc-height, 1vh) * 100);
+    background-color: rgba(var(--clr-border-primary), 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    p{
+        font-size: 1.6em;
+        font-family: 'Poppins';
+        color: white;
+        text-align: center;
+
+        margin-top: 5rem;
+
+        &.link{
+            font-size: 1.4em;
+            margin-top: 0.5em;
+            color: var(--color-theme);
+            text-decoration: underline;
+        }
+    }
+}
