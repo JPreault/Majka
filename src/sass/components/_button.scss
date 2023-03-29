@@ -1,13 +1,13 @@
 .blueButton {
     text-transform: uppercase;
     font-family: 'Fjalla One';
-    font-size: 1.8rem;
     color: white;
     background-color: #495AFF;
     width: fit-content;
     padding: 0.6em 1em;
     border-radius: 0.6em;
     cursor: pointer;
+    font-size: 1.2em;
 
     &:hover{
         background-color: #2B41E1;

@@ -1,0 +1,23 @@
+$colors: (
+  text: (
+    primary: #9798AD,
+    primary-hover: #2E325B,
+    secondary: #CBCCD6 ,
+    secondary-hover: #9798AD,
+    ternary: #FFFFFF,
+  ),
+  background: (
+    theme: #495AFF,
+    theme-hover: #2B41E1,
+    primary: #F0F3FF,
+    primary-hover: #E8EDFF,
+    secondary: #D4DAEE,
+    secondary-hover: #C3C8DE,
+    popup:#2E325B, //opacity 63%
+  ),
+  other: (
+    valid: #97C154,
+    error: #F44336,
+    warning: #FFB40B,
+  )
+)

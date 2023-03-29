@@ -7,6 +7,7 @@ import { ReactComponent as Pen } from '../images/svg/pen.svg';
 import { ReactComponent as Question } from '../images/svg/question.svg';
 import { ReactComponent as Color } from '../images/svg/color.svg';
 import { ReactComponent as Certified } from '../images/svg/certified.svg';
+import Icon from './tools/Icon';
 
 function Menu ()
 {
@@ -27,36 +28,58 @@ function Menu ()
             <div className="menuTab">
                 <div className='title'>games</div>
                 <div className={'link' + (page === '/game1' ? ' selected' : '')} onClick={() => { navigateTo('/game1');}}>
-                    <Music/>
+                    <Icon type="svg">
+                        <Music/>
+                    </Icon>
                     <span className='textLink'>Game 1</span>
-                    <Certified/>
+                    <Icon type="svg" className="certified">
+                        <Certified/>
+                    </Icon>
                 </div>
                 <div className={'link' + (page === '/game2' ? ' selected' : '')} onClick={() => { navigateTo('/game2');}}>
-                    <Line/>
+                    <Icon type="svg">
+                        <Line/>
+                    </Icon>
                     <span className='textLink'>Game 2</span>
-                    <Certified/>
+                    <Icon type="svg" className="certified">
+                        <Certified/>
+                    </Icon>
                 </div>
                 <div className={'link' + (page === '/game3' ? ' selected' : '')} onClick={() => { navigateTo('/game3');}}>
-                    <Pen/>
+                    <Icon type="svg">
+                        <Pen/>
+                    </Icon>
                     <span className='textLink'>Game 3</span>
-                    <Certified/>
+                    <Icon type="svg" className="certified">
+                        <Certified/>
+                    </Icon>
                 </div>
                 <div className={'link' + (page === '/game4' ? ' selected' : '')} onClick={() => { navigateTo('/game4');}}>
-                    <Question/>
+                    <Icon type="svg">
+                        <Question/>
+                    </Icon>
                     <span className='textLink'>Game 4</span>
-                    <Certified/>
+                    <Icon type="svg" className="certified">
+                        <Certified/>
+                    </Icon>
                 </div>
             </div>
             <div className="menuTab">
                 <div className='title'>settings</div>
-                <div className={'link hideMobile flex ai-center' + ((new URL(window.location.href)).pathname === '/folder' ? ' select' : '')} onClick={() => { navigate('/folder');}}>
-                    <Color/>
+                <div className={'link' + (page === '/color' ? ' selected' : '')} onClick={() => { navigateTo('/color');}}>
+                    <Icon type="svg">
+                        <Color/>
+                    </Icon>
                     <span className='textLink'>Colors</span>
                 </div>
             </div>
         </div>
         <div className='bottomMenu'>
-            <p>Progression</p>
+            <div className='title'>Progression
+            <div className='progressBar'>
+                <div className='progress'></div>
+            </div></div>
+            
         </div>
     </div>;
 }

@@ -23,10 +23,10 @@ root.render(<React.StrictMode>
                     <Route path='game2' element={<Login page='mobileLogin'/>} />
                     <Route path='game3' element={<Login page='newPassword'/>} />
                     <Route path='game4' element={<Login page='newPassword'/>} />
-                    <Route path='config' element={<Login page='newPassword'/>} />
+                    <Route path='color' element={<Login page='newPassword'/>} />
                     <Route path='finish' element={<Login page='newPassword'/>} />
-                    <Route path="*"element={<Page404/>} />
                 </Route>
+                <Route path="*"element={<Page404/>} />
             </Routes>
         </Router>
     </QueryClientProvider>
