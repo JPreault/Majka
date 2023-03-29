@@ -15,9 +15,10 @@ function Page ({page = null}) {
     }
   }, [page])  
 
-  return (<>
+  return (<div className='pageContent'>
+    <div className='headbandTheme'></div>
     {contentPage !== null && contentPage}
-  </>);
+  </div>);
 }
 
 export default Page;
