@@ -9,7 +9,7 @@ function BlockOfContent ({className = null, state = null, children}) {
   }, [state])
 
     return (
-        <div className={'blockOfContent' + (className !== null ? className : '')}>
+        <div className={'blockOfContent' + (className !== null ? ' ' + className : '')}>
             {displayState && <div className={'state ' + state}></div>}
             {children}
         </div>

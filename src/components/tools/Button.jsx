@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Button ({className = null, onClick = null, text}) {
+function Button ({className = null, onClick = null, text, disabled = false, type='submit'}) {
 
   function click() {
     if(onClick !== null) {
@@ -9,7 +9,7 @@ function Button ({className = null, onClick = null, text}) {
   }
 
     return (
-      <div className={'blueButton' + (className !== null ? ' ' + className : '')} onClick={click}>{text}</div>
+      <div className={(type === 'submit' ? 'blueButton' : 'greyButton') + (className !== null ? ' ' + className : '')} onClick={click} disabled={disabled}>{text}</div>
     );
 }
 

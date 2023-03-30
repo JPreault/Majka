@@ -2,7 +2,7 @@
     text-transform: uppercase;
     font-family: 'Fjalla One';
     color: white;
-    background-color: #495AFF;
+    background-color: rgba(var(--clr-background-theme));
     width: fit-content;
     padding: 0.6em 1em;
     border-radius: 0.6em;
@@ -10,11 +10,32 @@
     font-size: 1.2em;
 
     &:hover{
-        background-color: #2B41E1;
+        background-color: rgba(var(--clr-background-theme-hover));
     }
 
     &.long {
         width: 100%;
         text-align: center;
+    }
+
+    &:disabled, &[disabled]{
+        color: rgba(var(--clr-text-primary),.5);
+        background-color: rgba(var(--clr-background-secondary));
+    }
+}
+
+.greyButton {
+    text-transform: uppercase;
+    font-family: 'Fjalla One';
+    color: rgba(var(--clr-text-primary),.5);
+    background-color: transparent;
+    width: fit-content;
+    padding: 0.6em 1em;
+    border-radius: 0.6em;
+    cursor: pointer;
+    font-size: 1.2em;
+
+    &:hover{
+        color: rgba(var(--clr-text-primary));
     }
 }
