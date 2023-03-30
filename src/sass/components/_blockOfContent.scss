@@ -1,0 +1,33 @@
+.blockOfContent {
+  width: fit-content;
+  height: fit-content;
+  max-width: 100%;
+  padding: 1.5em;
+  background-color: rgba(var(--clr-background-primary-hover));
+  border-radius: 0.6em;
+  color: rgba(var(--clr-text-primary-hover));
+  font-weight: 300;
+  position: relative;
+
+  .title {
+    font-size: 1.2em;
+    font-weight: 500;
+  }
+
+  .state {
+    position: absolute;
+    width: 1rem;
+    height: 100%;
+    top: 0;
+    right: 0;
+    border-radius:  0 0.6em 0.6em 0;
+
+    &.valid {
+      background-color: rgba(var(--clr-other-valid));
+    }
+
+    &.error {
+      background-color: rgba(var(--clr-other-error));
+    }
+  }
+}

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import HomePage from './Homepage';
 
 function Page ({page = null}) {
-
   const [contentPage, setContentPage] = useState('homepage');
 
   useEffect(() => {
@@ -15,9 +14,11 @@ function Page ({page = null}) {
     }
   }, [page])  
 
-  return (<div className='pageContent'>
-    <div className='headbandTheme'></div>
-    {contentPage !== null && contentPage}
+  return (<div className='page'>
+    <div className='pageChild headband'></div>
+    <div className='pageChild content'>
+      {contentPage !== null && contentPage}
+    </div>
   </div>);
 }
 

@@ -1,0 +1,18 @@
+.titlePage {
+  letter-spacing: 0.05ch;
+  color: white;
+  font-size: 1.2em;
+  font-weight: 500;
+  white-space: pre;
+  margin-bottom: 1.3em;
+
+  &.main {
+    text-transform: uppercase;
+    font-size: 1.4em;
+  }
+
+  &.rule {
+
+  }
+
+}

@@ -1,0 +1,26 @@
+.game {
+  .title {
+    display: flex;
+    max-width: 100%;
+    width: fit-content;
+    height: 1.2em;
+    align-items: center;
+    gap: 0.5em;
+
+    .iconTool.certified {
+      height: 1em;
+      width: 1em;
+      svg {
+        fill: rgba(var(--clr-text-primary));
+      }
+
+      &.finish{
+        svg {
+          fill: rgba(var(--clr-other-valid));
+        }
+      }
+
+      
+    }
+  }
+}
