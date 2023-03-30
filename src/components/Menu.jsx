@@ -23,7 +23,7 @@ function Menu ()
     return <div id='menu'>
         <div className='topMenu'>
             <div className='logo'>
-                <img src={logo} alt="logo"/>
+                <img src={logo} alt="logo" draggable={false}/>
             </div>
             <Button className="long" onClick={() => {navigateTo('/')}} text="back home"/>
             <div className="menuTab">
