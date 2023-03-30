@@ -8,6 +8,7 @@ import { ReactComponent as Question } from '../images/svg/question.svg';
 import { ReactComponent as Color } from '../images/svg/color.svg';
 import { ReactComponent as Certified } from '../images/svg/certified.svg';
 import Icon from './tools/Icon';
+import Button from './tools/Button';
 
 function Menu ()
 {
@@ -24,7 +25,7 @@ function Menu ()
             <div className='logo'>
                 <img src={logo} alt="logo"/>
             </div>
-            <div className='blueButton long' onClick={() => {navigateTo('/')}}>back home</div>
+            <Button className="long" onClick={() => {navigateTo('/')}} text="back home"/>
             <div className="menuTab">
                 <div className='title'>games</div>
                 <div className={'link' + (page === '/game1' ? ' selected' : '')} onClick={() => { navigateTo('/game1');}}>
