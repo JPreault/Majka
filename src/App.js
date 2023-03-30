@@ -16,7 +16,7 @@ function App () {
     updateHeight();
 
     return (
-        <div className="App">
+        <div id='app' className="App">
             <Menu/>
             <Outlet/>
         </div>

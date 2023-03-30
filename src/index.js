@@ -20,7 +20,7 @@ root.render(<React.StrictMode>
                 <Route path="/" element={<App />}>
                     <Route index element={<Page page="homepage"/>} />
                     <Route path='game1' element={<Page page="homepage"/>} />
-                    <Route path='game2' element={<Page page="homepage"/>} />
+                    <Route path='game2' element={<Page page="game2"/>} />
                     <Route path='game3' element={<Page page="homepage"/>} />
                     <Route path='game4' element={<Page page="homepage"/>} />
                     <Route path='color' element={<Page page="homepage"/>} />

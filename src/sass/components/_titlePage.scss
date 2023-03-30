@@ -4,15 +4,29 @@
   font-size: 1.2em;
   font-weight: 500;
   white-space: pre;
-  margin-bottom: 1.3em;
+  margin-bottom: 0.3em;
 
   &.main {
     text-transform: uppercase;
     font-size: 1.4em;
+    margin-bottom: 1.3em;
   }
 
   &.rule {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    font-size: 1em;
 
+    .iconTool {
+      height: 1.2em;
+      width: 1.2em;
+
+      svg {
+        fill: rgba(var(--clr-text-ternary));
+      }
+    }
+    
   }
 
 }
