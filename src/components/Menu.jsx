@@ -24,7 +24,7 @@ function Menu ()
             <div className='logo'>
                 <img src={logo} alt="logo"/>
             </div>
-            <div className='blueButton long' onClick={() => {navigateTo('/')}}>homepage</div>
+            <div className='blueButton long' onClick={() => {navigateTo('/')}}>back home</div>
             <div className="menuTab">
                 <div className='title'>games</div>
                 <div className={'link' + (page === '/game1' ? ' selected' : '')} onClick={() => { navigateTo('/game1');}}>
