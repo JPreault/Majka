@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import TitlePage from '../components/tools/TitlePage';
 import BlockOfContent from '../components/tools/BlockOfContent';
 import image1 from '../images/jpg/1-valo.png';
@@ -11,27 +11,28 @@ import image7 from '../images/jpg/7-valo.png';
 import image8 from '../images/jpg/8-valo.png';
 import ReactDOM from 'react-dom';
 import Button from '../components/tools/Button';
+import Modal from '../components/modal/Modal';
 
-function Line ({selectedImage, startPosition, endPosition, color = null}) {
-    return ReactDOM.createPortal(<>{selectedImage !== null && startPosition && endPosition && <>
+
+function Line ({selectedImage, startPosition, endPosition, color = null, gameRef = null}) {
+    if(gameRef && gameRef.current) {
+        return ReactDOM.createPortal(<>{selectedImage !== null && startPosition && endPosition && <>
             <svg className={"game-line" + (color !== null ? ' ' + color : '')}>
                 <circle cx={startPosition.x} cy={startPosition.y} r="0.3em"/>
                 <line x1={startPosition.x} y1={startPosition.y} x2={endPosition.x} y2={endPosition.y} />
                 {selectedImage?.enabled && <circle cx={endPosition.x} cy={endPosition.y} r="0.3em"/>}
             </svg>
-        </>}</>, document.getElementById('app')
-    );
+        </>}</>, gameRef.current);
+    }
 }
 
 function Item ({side = null, image = null, pack = null, id, onClick}) {
 
     function onClickFunctionContent (event) {
-        console.log(event);
         onClick(event.target.parentNode.children[(side === 'L' ? 1 : 0)], side, id)
     }
 
     function onClickFunctionPoint (event) {
-        console.log(event);
         onClick(event.target, side, id)
     }
 
@@ -53,6 +54,9 @@ function Game2 () {
     const [endPosition, setEndPosition] = useState(null);
     const [disabled, setDisabled] = useState(true);
     const [answers, setAnswers] = useState(null);
+    const [finish, setFinish] = useState(false);
+    const [active, setActive] = useState(false);
+    const game2 = useRef(null);
     const images = [{id:1, image:image1},{id:2, image:image2},{id:3, image:image3},{id:4, image:image4},{id:5, image:image5},{id:6, image:image6},{id:7, image:image7},{id:8, image:image8}];
     const packs = [{id:4, pack:"Singularity"},{id:1, pack:"Prime 2.0"},{id:7, pack:"Smite"},{id:3, pack:"Genesis"},{id:8, pack:"Glitchpop"},{id:2, pack:"Champions 2021"},{id:6, pack:"Ruin"},{id:5, pack:"Hivemind"}];
 
@@ -99,8 +103,8 @@ function Game2 () {
             newAnswers[indexLeft].points = selectedImage.side + selectedImage.index + side + index;
             newAnswers[indexLeft].pointStart = startPosition;
             newAnswers[indexLeft].pointEnd = {
-                x: point.x + point.width / 2,
-                y: point.y + point.height / 2
+                x: point.x + point.width / 2 - game2.current.getBoundingClientRect().x,
+                y: point.y + point.height / 2 - game2.current.getBoundingClientRect().y
             };
             setAnswers(newAnswers)
             localStorage.setItem('game2', JSON.stringify(newAnswers));
@@ -122,17 +126,17 @@ function Game2 () {
                 side: side
             });
             setStartPosition({
-                x: point.x + point.width / 2,
-                y: point.y + point.height / 2
+                x: point.x + point.width / 2 - game2.current.getBoundingClientRect().x,
+                y: point.y + point.height / 2 - game2.current.getBoundingClientRect().y
             });
         }
-    };
+    }; 
 
     const handleMouseMove = (event) => {
         if (selectedImage) {
             setEndPosition({
-                x: event.clientX,
-                y: event.clientY
+                x: event.clientX - game2.current.getBoundingClientRect().x,
+                y: event.clientY - game2.current.getBoundingClientRect().y
             });
         }
     };
@@ -143,7 +147,7 @@ function Game2 () {
             let onImage = false;
             Object.values(lines).forEach(element => {
                 const coords = element.getBoundingClientRect();
-                if (endPosition.x < coords.x + coords.width && endPosition.x > coords.x && endPosition.y < coords.y + coords.height && endPosition.y > coords.y){
+                if (endPosition.x + game2.current.getBoundingClientRect().x < coords.x + coords.width && endPosition.x + game2.current.getBoundingClientRect().x > coords.x && endPosition.y + game2.current.getBoundingClientRect().y < coords.y + coords.height && endPosition.y + game2.current.getBoundingClientRect().y > coords.y){
                     onImage = true;
                 }
             });
@@ -175,6 +179,15 @@ function Game2 () {
         setAnswers(null);
     }
 
+    useEffect(() => {
+        answers !== null && Object.entries(answers).forEach(element => {
+            if(element[1]?.state === true){
+                setFinish(true);
+                setActive(true);
+            }
+        });
+    }, [answers])
+
     return (
         <>
             <TitlePage
@@ -183,7 +196,7 @@ function Game2 () {
                 rule="Connects the points corresponding to the skin and the packs"
             />
             <BlockOfContent className='game2'>
-                <div className="game" onMouseUp={handleMouseUp} onMouseMove={handleMouseMove} >
+                <div ref={game2} className="game" onMouseUp={handleMouseUp} onMouseMove={handleMouseMove} >
                     <div className="game-column">
                         {images.map((image, key) => {
                             return <Item key={key} side='L' id={image.id} image={image.image} onClick={handleImageClick}/>;
@@ -195,15 +208,18 @@ function Game2 () {
                         })}
                     </div>
                     {answers !== null && Object.values(answers).map((answer, key) => {
-                        return <Line key={key} selectedImage={answer} startPosition={answer?.pointStart} endPosition={answer?.pointEnd} color={answer?.state}/>;
+                        return <Line key={key} selectedImage={answer} startPosition={answer?.pointStart} endPosition={answer?.pointEnd} color={answer?.state} gameRef={game2}/>;
                     })}
-                    <Line selectedImage={selectedImage} startPosition={startPosition} endPosition={endPosition}/>
+                    <Line selectedImage={selectedImage} startPosition={startPosition} endPosition={endPosition} gameRef={game2}/>
                 </div>
                 <div className='buttons'>
                     <Button text={'reset'} type="reset" onClick={reset}/>
                     <Button text={'submit answer'} onClick={sumbit} disabled={disabled}/>
                 </div>
             </BlockOfContent>
+            <Modal active={active} setActive={setActive}>
+                <p>Gagné</p>
+            </Modal>
         </>
     );
 }
