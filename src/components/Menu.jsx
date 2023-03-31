@@ -44,6 +44,7 @@ function Menu ()
             game3:false,
             game4:false
         })
+        setPage('/');
         navigate('/');
     }
 
