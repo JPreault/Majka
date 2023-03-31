@@ -15,7 +15,7 @@ const root = ReactDOMClient.createRoot(container);
 
 root.render(<React.StrictMode>
     <QueryClientProvider client={queryClient}>
-        <Router>
+        <Router basename='majka'>
             <Routes>
                 <Route path="/" element={<App />}>
                     <Route index element={<Page page="homepage"/>} />

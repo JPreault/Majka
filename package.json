@@ -50,6 +50,7 @@
   "repository": "https://github.com/JPreault/Majka.git",
   "author": "José <jose@preault.com>",
   "license": "MIT",
+  "homepage":"/majka/",
   "devDependencies": {
     "babel-preset-gatsby": "^3.8.0"
   }
