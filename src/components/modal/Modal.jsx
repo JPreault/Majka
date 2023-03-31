@@ -1,33 +1,24 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef } from 'react';
 import ReactDOM from 'react-dom';
 import useOnClickOutside from '../../hooks/useOnClickOutside';
+import Icon from '../tools/Icon';
+import { ReactComponent as Close } from '../../images/svg/close.svg';
 
 // Structure du corps de la modal
-function Modal ({ id = null, active, setActive, children })
+function Modal ({ id = null, active, setActive, closable = false, children })
 {
-    const [opacity, setOpacity] = useState(false);
-    // Défini les ref
     const modalContent = useRef(null);
 
-    useEffect(() => {
-        if (active) {
-            setTimeout(() => {
-                setOpacity(true);
-            }, 50);
-        } else {
-            setOpacity(false);
-        }
-    }, [active]);
-
     // Quand la selectList est ouverte, détecte le clic à l'extérieur des div ayant pour ref 'thisSelectList' et 'thisSelectListInput' pour refermer la selectList
-    useOnClickOutside(modalContent, (number) => setActive(false), (id !== 'childOfModal'));
+    useOnClickOutside(modalContent, (number) => { closable && setActive(false)}, (id !== 'childOfModal'));
 
     return ReactDOM.createPortal(<>
         {active && <div id={ (id !== null) ? id : ''} className={'filterPopup '}>
-            <div className='popup open'>
-                <div ref={modalContent} className={'contentModal' + (opacity ? ' opacity' : '')}>
-                    {children}
-                </div>
+            <div ref={modalContent} className={'popup' + (closable ? '' : ' haveButton')}>
+                {closable && <Icon className='close' onClick={() => setActive(!active)}>
+                    <Close/>
+                </Icon>}
+                {children}
             </div>
         </div>}
     </>

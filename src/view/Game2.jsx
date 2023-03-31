@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import TitlePage from '../components/tools/TitlePage';
 import BlockOfContent from '../components/tools/BlockOfContent';
 import image1 from '../images/jpg/1-valo.png';
@@ -12,6 +12,8 @@ import image8 from '../images/jpg/8-valo.png';
 import ReactDOM from 'react-dom';
 import Button from '../components/tools/Button';
 import Modal from '../components/modal/Modal';
+import { GameContext } from '../App';
+import { FinishedNUmber } from '../functions/FinishedNumer';
 
 
 function Line ({selectedImage, startPosition, endPosition, color = null, gameRef = null}) {
@@ -54,40 +56,13 @@ function Game2 () {
     const [endPosition, setEndPosition] = useState(null);
     const [disabled, setDisabled] = useState(true);
     const [answers, setAnswers] = useState(null);
-    const [finish, setFinish] = useState(false);
     const [active, setActive] = useState(false);
     const game2 = useRef(null);
     const images = [{id:1, image:image1},{id:2, image:image2},{id:3, image:image3},{id:4, image:image4},{id:5, image:image5},{id:6, image:image6},{id:7, image:image7},{id:8, image:image8}];
     const packs = [{id:4, pack:"Singularity"},{id:1, pack:"Prime 2.0"},{id:7, pack:"Smite"},{id:3, pack:"Genesis"},{id:8, pack:"Glitchpop"},{id:2, pack:"Champions 2021"},{id:6, pack:"Ruin"},{id:5, pack:"Hivemind"}];
+    const {finish, setFinish} = useContext(GameContext);
 
-    useEffect(() => {
-        if(answers === null){
-            if(localStorage.getItem('game2') !== undefined && localStorage.getItem('game2') !== null) {
-                setAnswers(JSON.parse(localStorage.getItem('game2')));
-            } else {
-                setAnswers({
-                    0: {enabled: false, points: null, pointStart: null, pointEnd: null, state: null},
-                    1: {enabled: false, points: null, pointStart: null, pointEnd: null, state: null},
-                    2: {enabled: false, points: null, pointStart: null, pointEnd: null, state: null},
-                    3: {enabled: false, points: null, pointStart: null, pointEnd: null, state: null},
-                    4: {enabled: false, points: null, pointStart: null, pointEnd: null, state: null},
-                    5: {enabled: false, points: null, pointStart: null, pointEnd: null, state: null},
-                    6: {enabled: false, points: null, pointStart: null, pointEnd: null, state: null},
-                    7: {enabled: false, points: null, pointStart: null, pointEnd: null, state: null}
-                });
-            }
-        } else {
-            let newDisabled = false;
-            Object.entries(answers).forEach(element => {
-                if(element[1]?.enabled === false){
-                    newDisabled = true
-                }
-            });
-            setDisabled(newDisabled);
-        }
-    }, [answers])
-
-    const handleImageClick = (target, side, index) => {
+    function handleImageClick(target, side, index) {
         const point = target.getBoundingClientRect();
         if (selectedImage && selectedImage.side !== side) {
             const newAnswers = {
@@ -132,7 +107,7 @@ function Game2 () {
         }
     }; 
 
-    const handleMouseMove = (event) => {
+    function handleMouseMove(event) {
         if (selectedImage) {
             setEndPosition({
                 x: event.clientX - game2.current.getBoundingClientRect().x,
@@ -141,7 +116,7 @@ function Game2 () {
         }
     };
 
-    const handleMouseUp = (event, index) => {
+    function handleMouseUp(event, index) {
         if (selectedImage) {
             const lines = document.getElementsByClassName('line');
             let onImage = false;
@@ -158,10 +133,11 @@ function Game2 () {
         }
     };
 
-    const sumbit = () => {
+    function sumbit() {
         const newAnswers = {
             ...answers
         };
+        let finishGame2 = true;
         Object.entries(answers).forEach(element => {
             const points = (element[1]?.points).split('');
             if(points[1] === points[3]){
@@ -169,23 +145,60 @@ function Game2 () {
             }else{
                 newAnswers[element[0]].state = false;
             }
+            if(newAnswers[element[0]].state === null || !newAnswers[element[0]].state){
+                finishGame2 = false;
+            }
         });
         setAnswers(newAnswers);
         localStorage.setItem('game2', JSON.stringify(newAnswers));
+        if(finishGame2){
+            setActive(finishGame2);
+        }else{
+            const newFinish = {...finish};
+            newFinish.game2 = false;
+            setFinish(newFinish);
+        }
     }
 
-    const reset = () => {
+    function reset() {
         localStorage.removeItem('game2');
+        const newFinish = {...finish};
+        newFinish.game2=false;
         setAnswers(null);
+        setFinish(newFinish)
+    }
+
+    function finishGame2() {
+        const newFinish = {...finish};
+        newFinish.game2 = true;
+        setFinish(newFinish);
     }
 
     useEffect(() => {
-        answers !== null && Object.entries(answers).forEach(element => {
-            if(element[1]?.state === true){
-                setFinish(true);
-                setActive(true);
+        if(answers === null){
+            if(localStorage.getItem('game2') !== undefined && localStorage.getItem('game2') !== null) {
+                setAnswers(JSON.parse(localStorage.getItem('game2')));
+            } else {
+                setAnswers({
+                    0: {enabled: false, points: null, pointStart: null, pointEnd: null, state: null},
+                    1: {enabled: false, points: null, pointStart: null, pointEnd: null, state: null},
+                    2: {enabled: false, points: null, pointStart: null, pointEnd: null, state: null},
+                    3: {enabled: false, points: null, pointStart: null, pointEnd: null, state: null},
+                    4: {enabled: false, points: null, pointStart: null, pointEnd: null, state: null},
+                    5: {enabled: false, points: null, pointStart: null, pointEnd: null, state: null},
+                    6: {enabled: false, points: null, pointStart: null, pointEnd: null, state: null},
+                    7: {enabled: false, points: null, pointStart: null, pointEnd: null, state: null}
+                });
             }
-        });
+        } else {
+            let newDisabled = false;
+            Object.entries(answers).forEach(element => {
+                if(element[1]?.enabled === false){
+                    newDisabled = true
+                }
+            });
+            setDisabled(newDisabled);
+        }
     }, [answers])
 
     return (
@@ -218,7 +231,11 @@ function Game2 () {
                 </div>
             </BlockOfContent>
             <Modal active={active} setActive={setActive}>
-                <p>Gagné</p>
+                <div className='titlePopup'>Congratulations !!!!!!!</div>
+                {finish !== null && <div className='textPopup'>{FinishedNUmber(finish)}</div>}
+                <div className='containButton'>
+                    <Button text={'let\'s go !!'} onClick={() => {setActive(!active); finishGame2();}}/>
+                </div>
             </Modal>
         </>
     );

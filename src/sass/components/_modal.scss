@@ -1,0 +1,58 @@
+@use "../utilities/mixins" as *;
+
+.filterPopup{
+    z-index:4;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: calc(var(--doc-height, 1vh) * 100);
+    width: 100vw;
+    background-color: rgba(var(--clr-background-popup),0.63);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+    font-size: 1.7rem;
+    font-family: 'Poppins';
+    font-weight: 500;
+    color: rgba(var(--clr-text-primary-hover));
+
+    .popup{
+        position: relative;
+        width: fit-content;
+        height: fit-content;
+        background-color: rgba(var(--clr-background-ternary));
+        padding: 2em 5em;
+        border-radius: 1em;
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+
+        .close{
+            position: absolute;
+            right: 2em;
+            top: 2em;
+            cursor: pointer;
+            width: 3ch;
+            height: 3ch;
+        }
+
+        .titlePopup {
+            height: 100%;
+            font-size: 1.4em;
+        }
+
+        .textPopup {
+            height: 100%;
+            max-width: 70ch;          
+        }
+
+        .containButton {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+        }
+    }
+}
+
+

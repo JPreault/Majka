@@ -3,7 +3,7 @@ import React from 'react';
 function Button ({className = null, onClick = null, text, disabled = false, type='submit'}) {
 
   function click() {
-    if(onClick !== null) {
+    if(onClick !== null && !disabled) {
       onClick();
     }
   }

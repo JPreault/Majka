@@ -18,7 +18,7 @@ function Page ({page = null}) {
     }
   }, [page])  
 
-  return (<div className='page'>
+  return (<div className='page scrollOnY'>
     <div className='pageChild headband'></div>
     <div className='pageChild content'>
       {contentPage !== null && contentPage}

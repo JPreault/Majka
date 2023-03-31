@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from '../images/jpg/happyBirthday.png'
 import { ReactComponent as Music } from '../images/svg/music.svg';
@@ -7,17 +7,43 @@ import { ReactComponent as Pen } from '../images/svg/pen.svg';
 import { ReactComponent as Question } from '../images/svg/question.svg';
 import { ReactComponent as Color } from '../images/svg/color.svg';
 import { ReactComponent as Certified } from '../images/svg/certified.svg';
+import { ReactComponent as Reset } from '../images/svg/reset.svg';
 import Icon from './tools/Icon';
 import Button from './tools/Button';
+import { GameContext } from '../App';
+import Tooltip from './tools/Tooltip';
 
 function Menu ()
 {
     const [page, setPage] = useState('/');
     const navigate = useNavigate();
+    const {finish, setFinish} = useContext(GameContext);
 
     function navigateTo (dir) {
         setPage(dir);
         navigate(dir);
+    }
+
+    function pourcentageFinished() {
+        let pourcentage = 0;
+        if(finish !== null){
+            Object.values(finish).forEach(element => {
+                if(element === true){
+                    pourcentage = pourcentage+25;
+                }
+            });
+        }
+        return pourcentage;
+    }
+
+    function resetAll() {
+        localStorage.clear();
+        setFinish({
+            game1:false,
+            game2:false,
+            game3:false,
+            game4:false
+        })
     }
 
     return <div id='menu'>
@@ -42,7 +68,7 @@ function Menu ()
                         <Line/>
                     </Icon>
                     <span className='textLink'>Game 2</span>
-                    <Icon type="svg" className="certified">
+                    <Icon type="svg" className={"certified" + (finish?.game2 ? ' valid' : '')}>
                         <Certified/>
                     </Icon>
                 </div>
@@ -76,12 +102,34 @@ function Menu ()
             </div>
         </div>
         <div className='bottomMenu'>
-            <div className='title'>Progression
+            <div className='title'>
+                <div className='text'>Progression</div>
+                <Tooltip
+                    placement="right"
+                    content="Reset the progression"
+                    options={[
+                        {
+                            mode: 'dynamic',
+                            offset: {
+                                x: 0,
+                                y: 0
+                            },
+                            maxWidth: 318
+                        }
+                    ]}
+                    arrow={true}>
+                    <div onClick={resetAll}>
+                        <Icon type="svg">
+                            <Reset/>
+                        </Icon>
+                    </div>
+                </Tooltip>
+                
+            </div>
             <div className='progressBar'>
-                <div className='progress'></div>
-            </div></div>
-            
-        </div>
+                <div className='progress' style={{width: pourcentageFinished()+'%'}}></div>
+            </div>
+    </div>
     </div>;
 }
 

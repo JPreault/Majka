@@ -1,0 +1,72 @@
+.tooltip {
+    position: absolute;
+
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
+    font-family: 'Poppins';
+    background-color: rgba(var(--clr-text-primary-hover));
+    color: rgba(255, 255, 255, 1);
+    text-align: center;
+    font-size: 1rem;
+    white-space: pre-wrap;
+    font-size: 1.3em;
+
+    z-index: 999;
+
+    &:after {
+        content: '';
+        display: none;
+
+        position: absolute;
+
+        border-width: 5px;
+        border-style: solid;
+
+        z-index: 999;
+    }
+
+    &.with-arrow-bottom:after {
+        display: block;
+
+        bottom: -10px;
+        left: 50%;
+
+        border-color: rgba(var(--clr-text-primary-hover)) transparent transparent transparent;
+
+        transform: translateX(-50%);
+    }
+
+    &.with-arrow-top:after {
+        display: block;
+
+        top: -10px;
+        left: 50%;
+
+        border-color: transparent transparent rgba(var(--clr-text-primary-hover)) transparent;
+
+        transform: translateX(-50%);
+    }
+
+    &.with-arrow-left:after {
+        display: block;
+
+        top: 50%;
+        left: -9px;
+
+        border-color: transparent rgba(var(--clr-text-primary-hover)) transparent transparent;
+
+        transform: translateY(-50%);
+    }
+
+    &.with-arrow-right:after {
+        display: block;
+
+        top: 50%;
+        right: -9px;
+
+        border-color: transparent transparent transparent rgba(var(--clr-text-primary-hover));
+
+        transform: translateY(-50%);
+    }
+}

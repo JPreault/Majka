@@ -1,7 +1,7 @@
 .scrollOnY {
     overflow-x: hidden;
     overflow-y: auto;
-    scrollbar-color: rgba(var(--clr-input-secondary-bg)) transparent;
+    scrollbar-color: rgba(var(--clr-background-secondary)) transparent;
     scrollbar-width: 20px;
 
     @media not all and (min-resolution: 0.001dpcm) {
@@ -9,7 +9,7 @@
     }
 
     &:hover{
-        scrollbar-color: rgba(var(--clr-input-secondary-bg-focus)) transparent;
+        scrollbar-color: rgba(var(--clr-background-secondary-hover)) transparent;
     }
     &::-webkit-scrollbar {
         width: 14px;
@@ -18,9 +18,9 @@
         border: 3px solid transparent;
         border-radius: 10px;
         background-color: transparent!important;
-        box-shadow: inset 0px 0px 100px rgba(var(--clr-input-secondary-bg));
+        box-shadow: inset 0px 0px 100px rgba(var(--clr-background-secondary));
         &:hover {
-            box-shadow: inset 0px 0px 100px rgba(var(--clr-input-secondary-bg-focus));
+            box-shadow: inset 0px 0px 100px rgba(var(--clr-background-secondary-hover));
         }
     }
 
