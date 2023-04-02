@@ -2,15 +2,20 @@ import React from 'react';
 import Icon from './Icon';
 import { ReactComponent as Certified } from '../../images/svg/certified.svg';
 
-function Game ({title = null, state = false, children}) {
+function Game ({title = null, state = false, image = null, onClick, children}) {
 
     return (
-      <div className='game'>
+      <div className='gameBlock'>
         {title !== null && <div className='title'>
           {title}
           <Icon type="svg" className={'certified' + (state ? ' finish' : '')}>
             <Certified/>
           </Icon>
+        </div>}
+        {image !== null && <div className='containImageGame' onClick={onClick}>
+          {!state && <div className='blur'></div>}
+          <img alt='title' src={image}></img>
+          <div className='border'></div>
         </div>}
         {children}
       </div>

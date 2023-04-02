@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@hookform/resolvers": "^3.0.0",
+    "@jaredreisinger/react-crossword": "^5.2.0",
     "axios": "^1.3.4",
     "chart.js": "^4.2.1",
     "eslint": "^8.36.0",
@@ -50,7 +51,7 @@
   "repository": "https://github.com/JPreault/Majka.git",
   "author": "José <jose@preault.com>",
   "license": "MIT",
-  "homepage":"/majka/",
+  "homepage": "/majka/",
   "devDependencies": {
     "babel-preset-gatsby": "^3.8.0"
   }
