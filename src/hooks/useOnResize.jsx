@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
 
 const getWidth = () => window.innerWidth ||
@@ -8,7 +9,7 @@ const getHeight = () => window.innerHeight ||
   document.documentElement.clientHeight ||
   document.body.clientHeight;
 
-const useOnResize = (fnToExecute) => {
+function useOnResize(fnToExecute) {
     // On conserve la largeur actuelle de la fenêtre
     const [width, setWidth] = useState(getWidth());
     const [height, setHeight] = useState(getHeight());
@@ -36,7 +37,7 @@ const useOnResize = (fnToExecute) => {
         return () => {
             window.removeEventListener('resize', resizeListener);
         };
-    }, []);
+    }, [fnToExecute]);
 };
 
 export default useOnResize;
