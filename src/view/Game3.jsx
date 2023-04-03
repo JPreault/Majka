@@ -14,31 +14,31 @@ function Game2 () {
     const data = {
       down: {
         1: {
-          clue: 'BEDROCK',
+          clue: 'I\'m indestructible in survival mode.',
           answer: 'BEDROCK',
           row: 0,
           col: 8,
         },
         2: {
-          clue: 'ENDERMAN',
+          clue: 'I come to put a big punch on you, you look me in the eyes.',
           answer: 'ENDERMAN',
           row: 2,
           col: 10,
         },
         6: {
-          clue: 'ELYTRA',
+          clue: 'Red bull give wings, but you gotta go in the ender to get me.',
           answer: 'ELYTRA',
           row: 9,
           col: 9,
         },
         7: {
-          clue: 'NOTCH',
+          clue: 'I\'m the creator of minecraft, I also gave my name to a special apple.',
           answer: 'NOTCH',
           row: 9,
           col: 13,
         },
         8: {
-          clue: 'SHARPNESS',
+          clue: 'I\'m an enchantment that increases the attack of the sword I\'m on by 0.625 by level.',
           answer: 'SHARPNESS',
           row: 12,
           col: 7,
@@ -46,31 +46,31 @@ function Game2 () {
       },
       across: {
         3: {
-          clue: 'STRONGHOLD',
+          clue: 'I harbor the only way to go in the end.',
           answer: 'STRONGHOLD',
           row: 3,
           col: 6,
         },
         4: {
-          clue: 'CREEPER',
+          clue: 'I explode when you don\'t expect it.',
           answer: 'CREEPER',
           row: 5,
           col: 8,
         },
         5: {
-          clue: 'MENDING',
+          clue: 'I\'m an enchantment to repair the weapons, tools and armor I am on.',
           answer: 'MENDING',
           row: 9,
           col: 8,
         },
         9: {
-          clue: 'WITHER',
+          clue: 'I\'m a boss that needs to be summoned in order to be challenged.',
           answer: 'WITHER',
           row: 13,
           col: 4,
         },
         10: {
-          clue: 'REDSTONE',
+          clue: 'I\'m the equivalent of electricity but less dangerous.',
           answer: 'REDSTONE',
           row: 18,
           col: 0,
@@ -96,16 +96,6 @@ function Game2 () {
             <BlockOfContent className='game3'>
               <Crossword
                 data={data}
-                theme={{
-                  columnBreakpoint: '1000px',
-                  gridBackground: 'rgb(255,0,0)',
-                  cellBackground: 'rgb(255,255,0)',
-                  cellBorder: 'rgb(0, 0,255)',
-                  textColor: 'rgb(0,255,0)',
-                  numberColor: 'rgb(0,255,255)',
-                  focusBackground: 'rgb(255,0,255)',
-                  highlightBackground: 'rgb(255,255,255)'
-                }}
               />
             </BlockOfContent>
             <Modal active={active} setActive={setActive}>
