@@ -6,12 +6,11 @@ import Modal from '../components/modal/Modal';
 import { GameContext } from '../App';
 import { FinishedNUmber } from '../functions/FinishedNumer';
 import Crossword from '@jaredreisinger/react-crossword';
-import ReactDOM from 'react-dom';
 
-function Game2 () {
+function Game3 () {
     const [active, setActive] = useState(false);
+    const [save, setSave] = useState([]);
     const {finish, setFinish} = useContext(GameContext);
-    const [game, setGame] = useState((JSON.parse(localStorage.getItem('game3'))).guesses);
     const crossword = useRef(null);
     const data = {
       down: {
@@ -80,34 +79,28 @@ function Game2 () {
       },
     };
 
-    function finishGame2() {
+    function finishGame3() {
         const newFinish = {...finish};
-        newFinish.game2 = true;
+        newFinish.game3 = true;
         setFinish(newFinish);
     }
 
-    //https://github.com/JaredReisinger/react-crossword
-    
-    useEffect(() => {
-      if(crossword && crossword.current) {
-        const crosswordElement = document.getElementsByClassName('crossword grid')[0];
-        const mySVG = crosswordElement.firstChild.firstChild;
-        mySVG.setAttribute("viewBox", "0 0 162 212");
-        if(localStorage.getItem('game3') !== undefined && localStorage.getItem('game3') !== null) {
-          const answers = (JSON.parse(localStorage.getItem('game3'))).guesses;
-          Object.entries(answers).forEach(element => {
-            console.log(element);
-            if(element[1] !== '') {
-              const coords = element[0].split('_');
-              console.log('('+coords[0]+', '+coords[1]+', '+element[1]+')');
-              crossword.current.setGuess(coords[0], coords[1], element[1]);
-            }
-          });
+    function addColor () {
+      const allCells = document.getElementsByClassName('clue-cell');
+      Object.values(allCells).forEach(cell => {
+        const background = cell.firstChild;
+        const letter = cell.lastChild;
+        if(letter.classList.contains('guess-text-incorrect')) {
+          background.setAttribute('stroke', 'rgba(var(--clr-other-error))');
+          background.classList.remove("correct");
+          background.classList.add("incorrect");
+        }else{
+          background.setAttribute('stroke', 'rgba(var(--clr-other-valid))');
+          background.classList.remove("incorrect");
+          background.classList.add("correct");
         }
-      }  
-    }, [crossword])
-
-
+      });
+    }
 
     function reset() {
       if(crossword && crossword.current) {
@@ -119,59 +112,65 @@ function Game2 () {
           background.classList.remove("correct");
         });
       }
-      /* localStorage.removeItem('game2');
+      localStorage.removeItem('game3');
       const newFinish = {...finish};
-      newFinish.game2=false;
-      setAnswers(null);
-      setFinish(newFinish) */
+      newFinish.game3=false;
+      setFinish(newFinish);
     }
 
     function sumbit() {
       if(crossword && crossword.current) {
+        addColor();
+        const newFinish = {...finish};
         if(crossword.current.isCrosswordCorrect() ) {
-          //rgba(var(--clr-text-primary-hover), 1)
+          setActive(true);
+          crossword.current.fillAllAnswers();
+        } else {
+          newFinish.game3 = false;
         }
-        console.log(crossword.current);
-        const allCells = document.getElementsByClassName('clue-cell');
-        Object.values(allCells).forEach(cell => {
-          const background = cell.firstChild;
-          const letter = cell.lastChild;
-          if(letter.classList.contains('guess-text-incorrect')) {
-            background.setAttribute('stroke', 'rgba(var(--clr-other-error))');
-            background.classList.remove("correct");
-            background.classList.add("incorrect");
-          }else{
-            background.setAttribute('stroke', 'rgba(var(--clr-other-valid))');
-            background.classList.remove("incorrect");
-            background.classList.add("correct");
-          }
-        });
+        setFinish(newFinish);
       }
-      /* const newAnswers = {
-          ...answers
-      };
-      let finishGame2 = true;
-      Object.entries(answers).forEach(element => {
-          const points = (element[1]?.points).split('');
-          if(points[1] === points[3]){
-              newAnswers[element[0]].state = true;
-          }else{
-              newAnswers[element[0]].state = false;
-          }
-          if(newAnswers[element[0]].state === null || !newAnswers[element[0]].state){
-              finishGame2 = false;
-          }
-      });
-      setAnswers(newAnswers);
-      localStorage.setItem('game2', JSON.stringify(newAnswers));
-      if(finishGame2){
-          setActive(finishGame2);
-      }else{
-          const newFinish = {...finish};
-          newFinish.game2 = false;
-          setFinish(newFinish);
-      } */
     }
+
+    function onCellChange(row, col, char) {
+      let alreadySaved = false;
+      save.forEach((element, key) => {
+        if(element[0] === row && element[1] === col){
+          save[key] = [row, col, char];
+          alreadySaved = true;
+        }
+      });
+      if(!alreadySaved) {
+        save.push([row, col, char]);
+      }
+      setSave(save);
+      localStorage.setItem('game3', JSON.stringify(save));
+    }
+
+    useEffect(() => {
+      if(localStorage.getItem('game3') !== null && save.length === 0) {
+        const newSave = JSON.parse(localStorage.getItem('game3'));
+        setSave(newSave);
+        setTimeout(() => {
+          newSave.forEach(element => {
+            crossword.current.setGuess((parseInt(element[0])), (parseInt(element[1])), element[2]);
+          });
+        }, 30);
+        setTimeout(() => {
+          if(finish.game3) {
+            addColor();
+          }
+        }, 50);
+      } 
+    }, [save.length, finish.game3])
+    
+    useEffect(() => {
+      if(crossword !== null && crossword.current !== null) {
+        const crosswordElement = document.getElementsByClassName('crossword grid')[0];
+        const mySVG = crosswordElement.firstChild.firstChild;
+        mySVG.setAttribute("viewBox", "0 0 162 212");
+      }  
+    }, [crossword])
 
     return (
         <>
@@ -185,7 +184,7 @@ function Game2 () {
                 <Crossword
                   data={data}
                   ref={crossword}
-                  storageKey="game3"
+                  onCellChange={onCellChange}
                   theme={{
                     cellBackground: 'rgb(255,255,255)',
                     focusBackground: 'rgb(var(--clr-background-secondary))'
@@ -201,11 +200,11 @@ function Game2 () {
                 <div className='titlePopup'>Congratulations !!!!!!!</div>
                 {finish !== null && <div className='textPopup'>{FinishedNUmber(finish)}</div>}
                 <div className='containButton'>
-                    <Button text={'let\'s go !!'} onClick={() => {setActive(!active); finishGame2();}}/>
+                    <Button text={'let\'s go !!'} onClick={() => {setActive(!active); finishGame3();}}/>
                 </div>
             </Modal>
         </>
     );
 }
 
-export default Game2;
+export default Game3;

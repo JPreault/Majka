@@ -1,0 +1,10 @@
+.homepage {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    
+    .gameLine {
+        display: flex;
+        gap: 2em;
+    }
+}

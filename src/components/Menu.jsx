@@ -61,7 +61,7 @@ function Menu ()
                         <Music/>
                     </Icon>
                     <span className='textLink'>Game 1</span>
-                    <Icon type="svg" className="certified">
+                    <Icon type="svg" className={"certified" + (finish?.game1 ? ' valid' : '')}>
                         <Certified/>
                     </Icon>
                 </div>
@@ -79,7 +79,7 @@ function Menu ()
                         <Pen/>
                     </Icon>
                     <span className='textLink'>Game 3</span>
-                    <Icon type="svg" className="certified">
+                    <Icon type="svg" className={"certified" + (finish?.game3 ? ' valid' : '')}>
                         <Certified/>
                     </Icon>
                 </div>
@@ -88,7 +88,7 @@ function Menu ()
                         <Question/>
                     </Icon>
                     <span className='textLink'>Game 4</span>
-                    <Icon type="svg" className="certified">
+                    <Icon type="svg" className={"certified" + (finish?.game4 ? ' valid' : '')}>
                         <Certified/>
                     </Icon>
                 </div>
