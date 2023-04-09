@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import TitlePage from '../components/tools/TitlePage';
 import BlockOfContent from '../components/tools/BlockOfContent';
 import Button from '../components/tools/Button';
@@ -11,6 +11,7 @@ function Game4 () {
     const [active, setActive] = useState(false);
     const {finish, setFinish} = useContext(GameContext);
     const [error, setError] = useState([]);
+    const [save, setSave] = useState([]);
     const data = [
         ['Question', 'Réponse 1', 'Réponse 2', 'Réponse 3', 'Réponse 4'],
         ['Question', 'Réponse 1', 'Réponse 2', 'Réponse 3', 'Réponse 4'],
@@ -42,7 +43,7 @@ function Game4 () {
         const correctAnswers=["1","2","1","2","1","2","1","2","1","2"];
         correctAnswers.forEach((element, index) => {
             if (!(document.getElementById(`Q${index+1}-${element}`).checked)){
-                errorList.push(`${index+1}`);
+                errorList.push(`Q${index+1}`);
             }
         });
         setError(errorList);
@@ -55,12 +56,36 @@ function Game4 () {
         setFinish(newFinish);
     }
 
-    function getState(id) {
-        if(error.length !== 0) {
-            return (error.includes(id) ? 'error' : 'valid');
+    function updateSave(id, answer) {
+        let next = false;
+        save.forEach((element,index) => {
+            if(element[0] === id){
+                save[index] = [id,answer];
+                next = true;
+            }
+        });
+        if(!next) {
+            save.push([id,answer]);
         }
-        return '';
+        setSave(save);
+        [1,2,3,4].forEach(element => {
+            document.getElementsByClassName(`${id}-${element}`)[0].classList.remove('selected');
+        });
+        document.getElementsByClassName(`${id}-${answer}`)[0].classList.add('selected');
+        localStorage.setItem('game4', JSON.stringify(save));
     }
+
+    useEffect(() => {
+        if(localStorage.getItem('game4') !== null && save.length === 0) {
+            const newSave = JSON.parse(localStorage.getItem('game4'));
+            setSave(newSave);
+            newSave.forEach(element => {
+                const input = document.getElementById(element[0]+'-'+element[1]);
+                input.checked = true;
+                document.getElementsByClassName(element[0]+'-'+element[1])[0].classList.add('selected');
+            });
+        }
+    }, [save.length])
 
     return (
         <>
@@ -73,13 +98,15 @@ function Game4 () {
                 <div className='gameContent'>
                     {data.map((value, index) => {
                         return <Question
+                            key={index+1}
                             question={value[0]}
                             answer1={value[1]}
                             answer2={value[2]}
                             answer3={value[3]}
                             answer4={value[4]}
                             name={`Q${index+1}`}
-                            state={getState(index+1)}
+                            error={error}
+                            updateSave={updateSave}
                         />
                     })}
                 </div>

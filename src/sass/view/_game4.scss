@@ -22,6 +22,47 @@
                     display: flex;
                     gap: 0.5em;
                     flex-wrap: nowrap;
+                    background-color: rgba(var(--clr-background-secondary));
+                    padding: 0.3em 1em 0.3em 0.5em;
+                    border-radius: 5em 2em 2em 5em;
+                    color: rgba(var(--clr-text-primary-hover));
+                    cursor: pointer;
+                    align-items: center;
+
+                    &:hover {
+                        background-color: rgba(var(--clr-background-secondary-hover));
+                    }
+
+                    .point {
+                        height: 1em;
+                        width: 1em;
+                        background-color: white;
+                        border-radius: 50%;
+                        &.selected {
+                            border-color: white;
+                            border-width: 0.2em;
+                            border-style: solid inset solid solid;
+                            background-color: rgba(var(--clr-background-theme));
+
+                            &.valid {
+                                border-color: white;
+                                border-width: 0.2em;
+                                border-style: solid inset solid solid;
+                                background-color: rgba(var(--clr-other-valid));
+                            }
+    
+                            &.error {
+                                border-color: white;
+                                border-width: 0.2em;
+                                border-style: solid inset solid solid;
+                                background-color: rgba(var(--clr-other-error));
+                            }
+                        }
+                    }
+                }
+
+                input{
+                    display: none;
                 }
             }
         }
