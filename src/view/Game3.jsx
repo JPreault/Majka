@@ -118,7 +118,7 @@ function Game3 () {
       setFinish(newFinish);
     }
 
-    function sumbit() {
+    function submit() {
       if(crossword && crossword.current) {
         addColor();
         const newFinish = {...finish};
@@ -176,8 +176,8 @@ function Game3 () {
         <>
             <TitlePage
                 main="Game 3"
-                title="Will you be able to find which skin is in which pack ? "
-                rule="Connects the points corresponding to the skin and the packs"
+                title="Can you find each of the words hidden in this grid?"
+                rule="Read the definitions and try to find the associated words to complete the grid."
             />
             <BlockOfContent className='game3'>
               <div className='containGameplay'>
@@ -193,7 +193,7 @@ function Game3 () {
               </div>
               <div className='containButtons'>
                     <Button text={'Reset'} type="white_bg" onClick={reset}/>
-                    <Button text={'submit crossword'} onClick={sumbit}/>
+                    <Button text={'submit crossword'} onClick={submit}/>
                 </div>
             </BlockOfContent>
             <Modal active={active} setActive={setActive}>

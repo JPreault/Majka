@@ -133,7 +133,7 @@ function Game2 () {
         }
     };
 
-    function sumbit() {
+    function submit() {
         const newAnswers = {
             ...answers
         };
@@ -205,8 +205,8 @@ function Game2 () {
         <>
             <TitlePage
                 main="Game 2"
-                title="Will you be able to find which skin is in which pack ? "
-                rule="Connects the points corresponding to the skin and the packs"
+                title="Will you be able to find which skin is in which pack?"
+                rule="Connects the points corresponding to the skin and the packs."
             />
             <BlockOfContent className='game2'>
                 <div ref={game2} className="game" onMouseUp={handleMouseUp} onMouseMove={handleMouseMove} >
@@ -227,7 +227,7 @@ function Game2 () {
                 </div>
                 <div className='buttons'>
                     <Button text={'reset'} type="reset" onClick={reset}/>
-                    <Button text={'submit answer'} onClick={sumbit} disabled={disabled}/>
+                    <Button text={'submit answer'} onClick={submit} disabled={disabled}/>
                 </div>
             </BlockOfContent>
             <Modal active={active} setActive={setActive}>
