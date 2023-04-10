@@ -56,6 +56,37 @@
         .slider-picker {
             width: 30em;
         }
+
+        .card {
+            display: flex;
+            gap: 1em;
+            align-items: center;
+
+            .containCards {
+                position: relative;
+                overflow: hidden;
+                min-height: calc(min(70vh, 70vw) * 310/437);
+                min-width: calc(min(70vh, 70vw) * 437/310);
+                aspect-ratio: 437/310;
+
+                .moovingImg {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    display: flex;
+                    height: 100%;
+                    transition: left 1s;
+
+                    &.right {
+                        left: -100%;
+                    }
+                    
+                    img {
+                        height: 100%;
+                    }
+                }
+            }
+        }
     }
 }
 

@@ -1,0 +1,9 @@
+.finish {
+    display: flex;
+    gap: 2em;
+    align-items: center;
+    .preview {
+        width: 8em;
+        box-shadow: 0.2em 0.2em 0.2em rgba(var(--clr-text-primary));
+    }
+}

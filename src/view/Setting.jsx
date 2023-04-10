@@ -4,7 +4,7 @@ import BlockOfContent from '../components/tools/BlockOfContent';
 import { HexColorPicker } from "react-colorful";
 import Modal from '../components/modal/Modal';
 import Button from '../components/tools/Button';
-import { hexToRgb, lightenDarkerColor } from '../functions/Color';
+import { lightenDarkerColor } from '../functions/Color';
 
 function HomePage () {
     const [active, setActive] = useState(false);

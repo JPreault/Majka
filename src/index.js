@@ -23,7 +23,7 @@ root.render(<React.StrictMode>
                     <Route path='game2' element={<Page page="game2"/>} />
                     <Route path='game3' element={<Page page="game3"/>} />
                     <Route path='color' element={<Page page="color"/>} />
-                    <Route path='finish' element={<Page page="homepage"/>} />
+                    <Route path='finish' element={<Page page="finish"/>} />
                 </Route>
                 <Route path="*"element={<Page404/>} />
             </Routes>

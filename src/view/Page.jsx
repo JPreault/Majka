@@ -4,6 +4,7 @@ import Game1 from './Game1';
 import Game2 from './Game2';
 import Game3 from './Game3';
 import Setting from './Setting';
+import Finish from './Finish';
 
 function Page ({page = null}) {
   const [contentPage, setContentPage] = useState('homepage');
@@ -24,6 +25,9 @@ function Page ({page = null}) {
         break;
       case "color":
         setContentPage(<Setting/>)
+        break;
+      case "finish":
+          setContentPage(<Finish/>)
         break;
       default:
         break;
