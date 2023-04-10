@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import useOnResize from './hooks/useOnResize';
 import Menu from './components/Menu';
+import { lightenDarkerColor } from './functions/Color';
 
 function App () {
     const [finish, setFinish] = useState(null);
@@ -30,6 +31,13 @@ function App () {
                 game2: false,
                 game3: false
             });
+        }
+        if(localStorage.getItem('colors') !== null) {
+            const colors = JSON.parse(localStorage.getItem('colors'));
+            document.documentElement.style.setProperty('--color-error', colors.error);
+            document.documentElement.style.setProperty('--color-theme', colors.theme);
+            document.documentElement.style.setProperty('--color-theme-hover', lightenDarkerColor(colors.theme, -30));
+            document.documentElement.style.setProperty('--color-valid', colors.valid);
         }
     }, [])
     

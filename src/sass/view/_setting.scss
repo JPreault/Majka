@@ -1,0 +1,32 @@
+.color {
+    display: flex;
+    .colorsChangements {
+        display: flex;
+        flex-direction: column;
+        gap: 3em;
+
+        .changeColorBlock {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5em;
+
+            .mainLine {
+                display: flex;
+                align-items: center;
+                gap: 1em;
+                .blockOfColor {
+                    width: 3em;
+                    height: 3em;
+                    border-radius: 0.5em;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+
+    .containButtons{
+        display: flex;
+        align-items: flex-end;
+    }
+    
+}

@@ -52,7 +52,7 @@
             margin-left: auto;
             &.valid, &.valid:hover {
               svg {
-                fill: rgba(var(--clr-other-valid));
+                fill: var(--color-valid);
               }
             }
           }
@@ -116,7 +116,7 @@
 
       .progress {
         border-radius: 0.5em;
-        background-color: rgba(var(--clr-other-valid));
+        background-color: var(--color-valid);
         width: 0%;
         height: 100%;
         transition: width 2s;

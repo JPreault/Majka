@@ -8,6 +8,10 @@
 }
 
 :root {
+    --color-error : #F44336;
+    --color-theme : #495AFF;
+    --color-theme-hover : #2B41E1;
+    --color-valid : #97C154;
     --doc-height : 1vh;
     @each $color, $shades in $colors {
         @each $shade, $value in $shades {

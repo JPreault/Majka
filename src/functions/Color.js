@@ -91,16 +91,17 @@ export const lightenDarkerColor = (color, amount) => {
 
 export const changeThemeColor = (type, color) => {
     switch (type) {
-    case 'font':
-        document.documentElement.style.setProperty('--color-font', color);
-        break;
-    case 'theme':
-        document.documentElement.style.setProperty('--color-theme', color);
-        document.documentElement.style.setProperty('--color-theme-hover', lightenDarkerColor(color, -20));
-        break;
-    case 'pmr':
-        document.documentElement.style.setProperty('--color-pmr', color);
-        break;
+        case 'error':
+            document.documentElement.style.setProperty('--color-font', color);
+            break;
+        case 'theme':
+            document.documentElement.style.setProperty('--color-theme', color);
+            document.documentElement.style.setProperty('--color-theme-hover', lightenDarkerColor(color, -20));
+            break;
+        case 'valid':
+            document.documentElement.style.setProperty('--color-pmr', color);
+            break;
+        default: break;
     }
 };
 

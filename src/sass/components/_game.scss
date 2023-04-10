@@ -20,7 +20,7 @@
 
       &.finish{
         svg {
-          fill: rgba(var(--clr-other-valid));
+          fill: var(--color-valid);
         }
       }
     }

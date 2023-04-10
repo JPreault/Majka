@@ -128,7 +128,6 @@ function Game3 () {
                     })}
                 </div>
                 <div className='containButtons'>
-                    <p id="resultat"></p>
                     <Button text={'Reset'} type="white_bg" onClick={reset}/>
                     <Button text={'submit crossword'} onClick={submit}/>
                 </div>

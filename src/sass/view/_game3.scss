@@ -15,13 +15,13 @@
 
             &.valid {
                 .question {
-                    color: rgba(var(--clr-other-valid));
+                    color: var(--color-valid);
                 }
             }
 
             &.error {
                 .question {
-                    color: rgba(var(--clr-other-error));
+                    color: var(--color-error);
                 }
             }
 
@@ -55,7 +55,7 @@
                             border-color: white;
                             border-width: 0.2em;
                             border-style: solid inset solid solid;
-                            background-color: rgba(var(--clr-background-theme));
+                            background-color: var(--color-theme);
                         }
                     }
                 }

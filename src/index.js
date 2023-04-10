@@ -22,7 +22,7 @@ root.render(<React.StrictMode>
                     <Route path='game1' element={<Page page="game1"/>} />
                     <Route path='game2' element={<Page page="game2"/>} />
                     <Route path='game3' element={<Page page="game3"/>} />
-                    <Route path='color' element={<Page page="homepage"/>} />
+                    <Route path='color' element={<Page page="color"/>} />
                     <Route path='finish' element={<Page page="homepage"/>} />
                 </Route>
                 <Route path="*"element={<Page404/>} />
@@ -30,5 +30,3 @@ root.render(<React.StrictMode>
         </Router>
     </QueryClientProvider>
 </React.StrictMode>);
-
-/* <ReactQueryDevtools initialIsOpen={false} /> */

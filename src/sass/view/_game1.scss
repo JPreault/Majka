@@ -70,35 +70,35 @@
   pointer-events: none;
 
   circle {
-    stroke: rgba(var(--clr-background-theme));
-    fill: rgba(var(--clr-background-theme));
+    stroke: var(--color-theme);
+    fill: var(--color-theme);
     stroke-width: 0.1em;
   }
 
   line {
-    stroke: rgba(var(--clr-background-theme));
+    stroke: var(--color-theme);
     stroke-width: 0.2em;
   }
 
   &.false {
     circle {
-      stroke: rgba(var(--clr-other-error));
-      fill: rgba(var(--clr-other-error));
+      stroke: var(--color-error);
+      fill: var(--color-error);
     }
   
     line {
-      stroke: rgba(var(--clr-other-error));
+      stroke: var(--color-error);
     }
   }
 
   &.true {
     circle {
-      stroke: rgba(var(--clr-other-valid));
-      fill: rgba(var(--clr-other-valid));
+      stroke: var(--color-valid);
+      fill: var(--color-valid);
     }
   
     line {
-      stroke: rgba(var(--clr-other-valid));
+      stroke: var(--color-valid);
     }
   }
 

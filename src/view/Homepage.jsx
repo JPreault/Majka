@@ -19,7 +19,7 @@ function HomePage () {
         <>
             <TitlePage
                 main="Welcome to your birthday website !!!!!"
-                title={"Here you can choose between 4 games, you have to finish all of them.\nGood luck and have fun."}
+                title={"Here you can choose between 3 games, you have to finish all of them.\nGood luck and have fun."}
             />
             <BlockOfContent className='homepage'>
                 <div className='gameLine'>

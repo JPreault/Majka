@@ -24,11 +24,11 @@
     border-radius:  0 0.6em 0.6em 0;
 
     &.valid {
-      background-color: rgba(var(--clr-other-valid));
+      background-color: var(--color-valid);
     }
 
     &.error {
-      background-color: rgba(var(--clr-other-error));
+      background-color: var(--color-error);
     }
   }
 }

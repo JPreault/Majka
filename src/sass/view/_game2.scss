@@ -26,18 +26,18 @@
             stroke: rgba(var(--clr-text-primary-hover), 1);
             
             &.incorrect {
-              stroke: rgba(var(--clr-other-error));
+              stroke: var(--color-error);
             }
 
             &.correct {
-              stroke: rgba(var(--clr-other-valid));
+              stroke: var(--color-valid);
             }
           }
           text {
             fill: rgba(var(--clr-text-primary-hover), 1)!important;
             font-family: 'Poppins';
             &.guess-text-incorrect {
-              background-color: rgba(var(--clr-other-error), 1)!important;
+              background-color: rgba(var(--color-error), 1)!important;
             }
           }
         }
