@@ -212,7 +212,7 @@ function Game1 () {
     return (
         <>
             <TitlePage
-                main="Game 2"
+                main="Game 1"
                 title="Will you be able to find which skin is in which pack?"
                 rule="Connects the points corresponding to the skin and the packs."
             />

@@ -183,7 +183,7 @@ function Game2 () {
     return (
         <>
             <TitlePage
-                main="Game 3"
+                main="Game 2"
                 title="Can you find each of the words hidden in this grid?"
                 rule="Read the definitions and try to find the associated words to complete the grid."
             />

@@ -104,7 +104,7 @@ function Menu ()
                 </div>
             </div>
             {finish?.game1 && finish?.game2 && finish?.game3 && <div className="menuTab">
-                <img className='surprise' alt='endSurprise' src={gift}/>
+                <img className='surprise' alt='endSurprise' src={gift}  onClick={() => { navigateTo('/finish');}}/>
             </div>}
         </div>
         <div className='bottomMenu'>

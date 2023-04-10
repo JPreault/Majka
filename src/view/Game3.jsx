@@ -16,14 +16,14 @@ function Game3 () {
     const data = [
         ['1 - What is the name of Kururo\'s book?', 'Skill thief', 'Abilitie Hunter', 'Skill hunter', 'Abilitie thief'],
         ['2 - What is the first number that Biscuit shows with his nen?', '1', '2', '3', '4'],
-        ['3 - What is the Kirua hunter exam assignment?', '287', '288', '289', '290'],
+        ['3 - What is the Killua hunter exam assignment?', '287', '288', '289', '290'],
         ['4 - What is the name of Biscuit\'s magical esthetician?', 'Kukki', 'Kuukyi', 'Coockie', 'Cookie'],
         ['5 - What is Kuroro\'s place in the arm wrestling brigade\'s ranking ', '1st', '3rd', '5th', '7th'],
         ['6 - How old is Killua ?', '8 years old', '12 years old', 'Over 30 years old', 'We don\'t know, it\'s not said.'],
-        ['7 - At what age did he start killing?', '2 years old', '3 years old', '4 years old', '5 years old'],
+        ['7 - At what age did Killua start killing?', '2 years old', '3 years old', '4 years old', '5 years old'],
         ['8 - How many members are there in the Zoldyck siblings?', '3', '4', '5', '6'],
-        ['9 - What was Killua\'s number in the Hunter test?', '99', '302', '44', '406'],
-        ['10 - What color is Killua\'s skateboard?', 'Yellow', 'Green', 'Red', 'Pink']
+        ['9 - What was Killua\'s number in the first Hunter test?', '99', '302', '44', '406'],
+        ['10 - What color is Killua\'s skateboard?', 'Brown', 'Yellow', 'Red', 'Pink']
     ]
    
     function finishGame3() {
@@ -106,7 +106,7 @@ function Game3 () {
     return (
         <>
             <TitlePage
-                main="Game 4"
+                main="Game 3"
                 title="Can you find the answer to each of these questions?"
                 rule="Read the question and select the answer that you think is true."
             />
