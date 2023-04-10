@@ -1,204 +1,141 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import TitlePage from '../components/tools/TitlePage';
 import BlockOfContent from '../components/tools/BlockOfContent';
 import Button from '../components/tools/Button';
 import Modal from '../components/modal/Modal';
 import { GameContext } from '../App';
 import { FinishedNUmber } from '../functions/FinishedNumer';
-import Crossword from '@jaredreisinger/react-crossword';
+import Question from '../components/tools/Question';
 
 function Game3 () {
     const [active, setActive] = useState(false);
-    const [save, setSave] = useState([]);
     const {finish, setFinish} = useContext(GameContext);
-    const crossword = useRef(null);
-    const data = {
-      down: {
-        1: {
-          clue: 'I\'m indestructible in survival mode.',
-          answer: 'BEDROCK',
-          row: 0,
-          col: 8,
-        },
-        2: {
-          clue: 'I\'m coming to give you a big punch if you look me in the eye.',
-          answer: 'ENDERMAN',
-          row: 2,
-          col: 10,
-        },
-        6: {
-          clue: 'Red bull give wings, but you gotta go in the ender to get me.',
-          answer: 'ELYTRA',
-          row: 9,
-          col: 9,
-        },
-        7: {
-          clue: 'I\'m the creator of minecraft, I also gave my name to a special apple.',
-          answer: 'NOTCH',
-          row: 9,
-          col: 13,
-        },
-        8: {
-          clue: 'I\'m an enchantment that increases the attack of the sword I\'m on by 0.625 by level.',
-          answer: 'SHARPNESS',
-          row: 12,
-          col: 7,
-        }
-      },
-      across: {
-        3: {
-          clue: 'I harbor the only way to go in the end.',
-          answer: 'STRONGHOLD',
-          row: 3,
-          col: 6,
-        },
-        4: {
-          clue: 'I explode when you don\'t expect it.',
-          answer: 'CREEPER',
-          row: 5,
-          col: 8,
-        },
-        5: {
-          clue: 'I\'m an enchantment to repair the weapons, tools and armor I am on.',
-          answer: 'MENDING',
-          row: 9,
-          col: 8,
-        },
-        9: {
-          clue: 'I\'m a boss that needs to be summoned in order to be challenged.',
-          answer: 'WITHER',
-          row: 13,
-          col: 4,
-        },
-        10: {
-          clue: 'I\'m the equivalent of electricity but less dangerous.',
-          answer: 'REDSTONE',
-          row: 18,
-          col: 0,
-        },
-      },
-    };
-
+    const [howManyFinished, setHowManyFinished] = useState(0);
+    const [error, setError] = useState([]);
+    const [save, setSave] = useState([]);
+    const data = [
+        ['1 - What is the name of Kururo\'s book?', 'Skill thief', 'Abilitie Hunter', 'Skill hunter', 'Abilitie thief'],
+        ['2 - What is the first number that Biscuit shows with his nen?', '1', '2', '3', '4'],
+        ['3 - What is the Kirua hunter exam assignment?', '287', '288', '289', '290'],
+        ['4 - What is the name of Biscuit\'s magical esthetician?', 'Kukki', 'Kuukyi', 'Coockie', 'Cookie'],
+        ['5 - What is Kuroro\'s place in the arm wrestling brigade\'s ranking ', '1st', '3rd', '5th', '7th'],
+        ['6 - How old is Killua ?', '8 years old', '12 years old', 'Over 30 years old', 'We don\'t know, it\'s not said.'],
+        ['7 - At what age did he start killing?', '2 years old', '3 years old', '4 years old', '5 years old'],
+        ['8 - How many members are there in the Zoldyck siblings?', '3', '4', '5', '6'],
+        ['9 - What was Killua\'s number in the Hunter test?', '99', '302', '44', '406'],
+        ['10 - What color is Killua\'s skateboard?', 'Yellow', 'Green', 'Red', 'Pink']
+    ]
+   
     function finishGame3() {
         const newFinish = {...finish};
         newFinish.game3 = true;
         setFinish(newFinish);
     }
 
-    function addColor () {
-      const allCells = document.getElementsByClassName('clue-cell');
-      Object.values(allCells).forEach(cell => {
-        const background = cell.firstChild;
-        const letter = cell.lastChild;
-        if(letter.classList.contains('guess-text-incorrect')) {
-          background.setAttribute('stroke', 'rgba(var(--clr-other-error))');
-          background.classList.remove("correct");
-          background.classList.add("incorrect");
-        }else{
-          background.setAttribute('stroke', 'rgba(var(--clr-other-valid))');
-          background.classList.remove("incorrect");
-          background.classList.add("correct");
-        }
-      });
-    }
-
     function reset() {
-      if(crossword && crossword.current) {
-        crossword.current.reset();
-        const allCells = document.getElementsByClassName('clue-cell');
-        Object.values(allCells).forEach(cell => {
-          const background = cell.firstChild;
-          background.classList.remove("incorrect");
-          background.classList.remove("correct");
+        localStorage.removeItem('game3');
+        const newFinish = {...finish};
+        newFinish.game3=false;
+        setFinish(newFinish);
+        setError([]);
+        data.forEach((element, index) => {
+            const questions = [1,2,3,4];
+            questions.forEach(littleIndex => {
+                document.getElementById(`Q${index+1}-${littleIndex}`).checked = false
+                document.getElementsByClassName(`Q${index+1}-${littleIndex}`)[0].classList.remove('selected');
+            });            
         });
-      }
-      localStorage.removeItem('game3');
-      const newFinish = {...finish};
-      newFinish.game3=false;
-      setFinish(newFinish);
     }
 
     function submit() {
-      if(crossword && crossword.current) {
-        addColor();
+        const errorList=[];
+        const correctAnswers=["3","1","2","4","4","2","2","3","1","2"];
+        correctAnswers.forEach((element, index) => {
+            if (!(document.getElementById(`Q${index+1}-${element}`).checked)){
+                errorList.push(`Q${index+1}`);
+            }
+        });
+        setError(errorList);
         const newFinish = {...finish};
-        if(crossword.current.isCrosswordCorrect() ) {
-          setActive(true);
-          crossword.current.fillAllAnswers();
+        if(errorList.length === 0) {
+            setActive(true);
+            let numberFinish = 1;
+            Object.entries(finish).forEach(element => {
+                if(element[1] && element[0] !== 'game3'){
+                    numberFinish++
+                }
+            });
+            setHowManyFinished(numberFinish)
         } else {
-          newFinish.game3 = false;
+            newFinish.game3 = false;
         }
         setFinish(newFinish);
-      }
     }
 
-    function onCellChange(row, col, char) {
-      let alreadySaved = false;
-      save.forEach((element, key) => {
-        if(element[0] === row && element[1] === col){
-          save[key] = [row, col, char];
-          alreadySaved = true;
+    function updateSave(id, answer) {
+        let next = false;
+        save.forEach((element,index) => {
+            if(element[0] === id){
+                save[index] = [id,answer];
+                next = true;
+            }
+        });
+        if(!next) {
+            save.push([id,answer]);
         }
-      });
-      if(!alreadySaved) {
-        save.push([row, col, char]);
-      }
-      setSave(save);
-      localStorage.setItem('game3', JSON.stringify(save));
+        setSave(save);
+        [1,2,3,4].forEach(element => {
+            document.getElementsByClassName(`${id}-${element}`)[0].classList.remove('selected');
+        });
+        document.getElementsByClassName(`${id}-${answer}`)[0].classList.add('selected');
+        localStorage.setItem('game3', JSON.stringify(save));
     }
 
     useEffect(() => {
-      if(localStorage.getItem('game3') !== null && save.length === 0) {
-        const newSave = JSON.parse(localStorage.getItem('game3'));
-        setSave(newSave);
-        setTimeout(() => {
-          newSave.forEach(element => {
-            crossword.current.setGuess((parseInt(element[0])), (parseInt(element[1])), element[2]);
-          });
-        }, 30);
-        setTimeout(() => {
-          if(finish.game3) {
-            addColor();
-          }
-        }, 50);
-      } 
-    }, [save.length, finish.game3])
-    
-    useEffect(() => {
-      if(crossword !== null && crossword.current !== null) {
-        const crosswordElement = document.getElementsByClassName('crossword grid')[0];
-        const mySVG = crosswordElement.firstChild.firstChild;
-        mySVG.setAttribute("viewBox", "0 0 162 212");
-      }  
-    }, [crossword])
+        if(localStorage.getItem('game3') !== null && save.length === 0) {
+            const newSave = JSON.parse(localStorage.getItem('game3'));
+            setSave(newSave);
+            newSave.forEach(element => {
+                const input = document.getElementById(element[0]+'-'+element[1]);
+                input.checked = true;
+                document.getElementsByClassName(element[0]+'-'+element[1])[0].classList.add('selected');
+            });
+        }
+    }, [save.length])
 
     return (
         <>
             <TitlePage
-                main="Game 3"
-                title="Can you find each of the words hidden in this grid?"
-                rule="Read the definitions and try to find the associated words to complete the grid."
+                main="Game 4"
+                title="Can you find the answer to each of these questions?"
+                rule="Read the question and select the answer that you think is true."
             />
             <BlockOfContent className='game3'>
-              <div className='containGameplay'>
-                <Crossword
-                  data={data}
-                  ref={crossword}
-                  onCellChange={onCellChange}
-                  theme={{
-                    cellBackground: 'rgb(255,255,255)',
-                    focusBackground: 'rgb(var(--clr-background-secondary))'
-                  }}
-                />
-              </div>
-              <div className='containButtons'>
+                <div className='gameContent'>
+                    {data.map((value, index) => {
+                        return <Question
+                            key={index+1}
+                            question={value[0]}
+                            answer1={value[1]}
+                            answer2={value[2]}
+                            answer3={value[3]}
+                            answer4={value[4]}
+                            name={`Q${index+1}`}
+                            error={error}
+                            finish={finish.game3}
+                            updateSave={updateSave}
+                        />
+                    })}
+                </div>
+                <div className='containButtons'>
+                    <p id="resultat"></p>
                     <Button text={'Reset'} type="white_bg" onClick={reset}/>
                     <Button text={'submit crossword'} onClick={submit}/>
                 </div>
             </BlockOfContent>
             <Modal active={active} setActive={setActive}>
                 <div className='titlePopup'>Congratulations !!!!!!!</div>
-                {finish !== null && <div className='textPopup'>{FinishedNUmber(finish)}</div>}
+                {finish !== null && <div className='textPopup'>{FinishedNUmber(howManyFinished)}</div>}
                 <div className='containButton'>
                     <Button text={'let\'s go !!'} onClick={() => {setActive(!active); finishGame3();}}/>
                 </div>

@@ -1,240 +1,214 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import TitlePage from '../components/tools/TitlePage';
 import BlockOfContent from '../components/tools/BlockOfContent';
-import image1 from '../images/jpg/1-valo.png';
-import image2 from '../images/jpg/2-valo.png';
-import image3 from '../images/jpg/3-valo.png';
-import image4 from '../images/jpg/4-valo.png';
-import image5 from '../images/jpg/5-valo.png';
-import image6 from '../images/jpg/6-valo.png';
-import image7 from '../images/jpg/7-valo.png';
-import image8 from '../images/jpg/8-valo.png';
-import ReactDOM from 'react-dom';
 import Button from '../components/tools/Button';
 import Modal from '../components/modal/Modal';
 import { GameContext } from '../App';
 import { FinishedNUmber } from '../functions/FinishedNumer';
-
-
-function Line ({selectedImage, startPosition, endPosition, color = null, gameRef = null}) {
-    if(gameRef && gameRef.current) {
-        return ReactDOM.createPortal(<>{selectedImage !== null && startPosition && endPosition && <>
-            <svg className={"game-line" + (color !== null ? ' ' + color : '')}>
-                <circle cx={startPosition.x} cy={startPosition.y} r="0.3em"/>
-                <line x1={startPosition.x} y1={startPosition.y} x2={endPosition.x} y2={endPosition.y} />
-                {selectedImage?.enabled && <circle cx={endPosition.x} cy={endPosition.y} r="0.3em"/>}
-            </svg>
-        </>}</>, gameRef.current);
-    }
-}
-
-function Item ({side = null, image = null, pack = null, id, onClick}) {
-
-    function onClickFunctionContent (event) {
-        onClick(event.target.parentNode.children[(side === 'L' ? 1 : 0)], side, id)
-    }
-
-    function onClickFunctionPoint (event) {
-        onClick(event.target, side, id)
-    }
-
-    return (<div className='line'>
-        {image !== null && <>
-            <img src={image} alt="1" draggable={false} onClick={(event) => onClickFunctionContent(event)}/>
-            <div className='point' onClick={(event) => onClickFunctionPoint(event)}></div>
-        </>}
-        {pack !== null && <>
-            <div className='point' onClick={(event) => onClickFunctionPoint(event)}></div>
-            <div className='pack' onClick={(event) => onClickFunctionContent(event)}>{pack}</div>
-        </>}        
-    </div>);
-}
+import Crossword from '@jaredreisinger/react-crossword';
 
 function Game2 () {
-    const [selectedImage, setSelectedImage] = useState(null);
-    const [startPosition, setStartPosition] = useState(null);
-    const [endPosition, setEndPosition] = useState(null);
-    const [disabled, setDisabled] = useState(true);
-    const [answers, setAnswers] = useState(null);
     const [active, setActive] = useState(false);
-    const game2 = useRef(null);
-    const images = [{id:1, image:image1},{id:2, image:image2},{id:3, image:image3},{id:4, image:image4},{id:5, image:image5},{id:6, image:image6},{id:7, image:image7},{id:8, image:image8}];
-    const packs = [{id:4, pack:"Singularity"},{id:1, pack:"Prime 2.0"},{id:7, pack:"Smite"},{id:3, pack:"Genesis"},{id:8, pack:"Glitchpop"},{id:2, pack:"Champions 2021"},{id:6, pack:"Ruin"},{id:5, pack:"Hivemind"}];
+    const [save, setSave] = useState([]);
     const {finish, setFinish} = useContext(GameContext);
-
-    function handleImageClick(target, side, index) {
-        const point = target.getBoundingClientRect();
-        if (selectedImage && selectedImage.side !== side) {
-            const newAnswers = {
-                ...answers
-            };
-            Object.entries(answers).forEach(element => {
-                if(element[1]?.enabled && (element[1].points).includes(side + index)) {
-                    newAnswers[element[0]] = {enabled: false, pointLeft: null, pointRight: null, state: null}
-                }
-            });
-            const indexLeft = (selectedImage.side === 'L' ? selectedImage.index : index) - 1;
-            newAnswers[indexLeft].enabled = true;
-            newAnswers[indexLeft].points = selectedImage.side + selectedImage.index + side + index;
-            newAnswers[indexLeft].pointStart = startPosition;
-            newAnswers[indexLeft].pointEnd = {
-                x: point.x + point.width / 2 - game2.current.getBoundingClientRect().x,
-                y: point.y + point.height / 2 - game2.current.getBoundingClientRect().y
-            };
-            setAnswers(newAnswers)
-            localStorage.setItem('game2', JSON.stringify(newAnswers));
-            setSelectedImage(null);
-            setEndPosition(null);
-        }else{
-            const newAnswers = {
-                ...answers
-            };
-            Object.entries(answers).forEach(element => {
-                if(element[1]?.enabled && (element[1].points).includes(side + index)) {
-                    newAnswers[element[0]] = {enabled: false, pointLeft: null, pointRight: null, state: null}
-                }
-            });
-            setAnswers(newAnswers);
-            localStorage.setItem('game2', JSON.stringify(newAnswers));
-            setSelectedImage({
-                index: index,
-                side: side
-            });
-            setStartPosition({
-                x: point.x + point.width / 2 - game2.current.getBoundingClientRect().x,
-                y: point.y + point.height / 2 - game2.current.getBoundingClientRect().y
-            });
+    const [howManyFinished, setHowManyFinished] = useState(0);
+    const crossword = useRef(null);
+    const data = {
+      down: {
+        1: {
+          clue: 'I\'m indestructible in survival mode.',
+          answer: 'BEDROCK',
+          row: 0,
+          col: 8,
+        },
+        2: {
+          clue: 'I\'m coming to give you a big punch if you look me in the eye.',
+          answer: 'ENDERMAN',
+          row: 2,
+          col: 10,
+        },
+        6: {
+          clue: 'Red bull give wings, but you gotta go in the ender to get me.',
+          answer: 'ELYTRA',
+          row: 9,
+          col: 9,
+        },
+        7: {
+          clue: 'I\'m the creator of minecraft, I also gave my name to a special apple.',
+          answer: 'NOTCH',
+          row: 9,
+          col: 13,
+        },
+        8: {
+          clue: 'I\'m an enchantment that increases the attack of the sword I\'m on by 0.625 by level.',
+          answer: 'SHARPNESS',
+          row: 12,
+          col: 7,
         }
-    }; 
-
-    function handleMouseMove(event) {
-        if (selectedImage) {
-            setEndPosition({
-                x: event.clientX - game2.current.getBoundingClientRect().x,
-                y: event.clientY - game2.current.getBoundingClientRect().y
-            });
-        }
+      },
+      across: {
+        3: {
+          clue: 'I harbor the only way to go in the end.',
+          answer: 'STRONGHOLD',
+          row: 3,
+          col: 6,
+        },
+        4: {
+          clue: 'I explode when you don\'t expect it.',
+          answer: 'CREEPER',
+          row: 5,
+          col: 8,
+        },
+        5: {
+          clue: 'I\'m an enchantment to repair the weapons, tools and armor I am on.',
+          answer: 'MENDING',
+          row: 9,
+          col: 8,
+        },
+        9: {
+          clue: 'I\'m a boss that needs to be summoned in order to be challenged.',
+          answer: 'WITHER',
+          row: 13,
+          col: 4,
+        },
+        10: {
+          clue: 'I\'m the equivalent of electricity but less dangerous.',
+          answer: 'REDSTONE',
+          row: 18,
+          col: 0,
+        },
+      },
     };
 
-    function handleMouseUp(event, index) {
-        if (selectedImage) {
-            const lines = document.getElementsByClassName('line');
-            let onImage = false;
-            Object.values(lines).forEach(element => {
-                const coords = element.getBoundingClientRect();
-                if (endPosition.x + game2.current.getBoundingClientRect().x < coords.x + coords.width && endPosition.x + game2.current.getBoundingClientRect().x > coords.x && endPosition.y + game2.current.getBoundingClientRect().y < coords.y + coords.height && endPosition.y + game2.current.getBoundingClientRect().y > coords.y){
-                    onImage = true;
-                }
-            });
-            if(!onImage) {
-                setSelectedImage(null);
-                setEndPosition(null);
-            }
-        }
-    };
-
-    function submit() {
-        const newAnswers = {
-            ...answers
-        };
-        let finishGame2 = true;
-        Object.entries(answers).forEach(element => {
-            const points = (element[1]?.points).split('');
-            if(points[1] === points[3]){
-                newAnswers[element[0]].state = true;
-            }else{
-                newAnswers[element[0]].state = false;
-            }
-            if(newAnswers[element[0]].state === null || !newAnswers[element[0]].state){
-                finishGame2 = false;
-            }
-        });
-        setAnswers(newAnswers);
-        localStorage.setItem('game2', JSON.stringify(newAnswers));
-        if(finishGame2){
-            setActive(finishGame2);
-        }else{
-            const newFinish = {...finish};
-            newFinish.game2 = false;
-            setFinish(newFinish);
-        }
-    }
-
-    function reset() {
-        localStorage.removeItem('game2');
-        const newFinish = {...finish};
-        newFinish.game2=false;
-        setAnswers(null);
-        setFinish(newFinish)
-    }
-
-    function finishGame2() {
+    function finishGame3() {
         const newFinish = {...finish};
         newFinish.game2 = true;
         setFinish(newFinish);
     }
 
-    useEffect(() => {
-        if(answers === null){
-            if(localStorage.getItem('game2') !== undefined && localStorage.getItem('game2') !== null) {
-                setAnswers(JSON.parse(localStorage.getItem('game2')));
-            } else {
-                setAnswers({
-                    0: {enabled: false, points: null, pointStart: null, pointEnd: null, state: null},
-                    1: {enabled: false, points: null, pointStart: null, pointEnd: null, state: null},
-                    2: {enabled: false, points: null, pointStart: null, pointEnd: null, state: null},
-                    3: {enabled: false, points: null, pointStart: null, pointEnd: null, state: null},
-                    4: {enabled: false, points: null, pointStart: null, pointEnd: null, state: null},
-                    5: {enabled: false, points: null, pointStart: null, pointEnd: null, state: null},
-                    6: {enabled: false, points: null, pointStart: null, pointEnd: null, state: null},
-                    7: {enabled: false, points: null, pointStart: null, pointEnd: null, state: null}
-                });
-            }
-        } else {
-            let newDisabled = false;
-            Object.entries(answers).forEach(element => {
-                if(element[1]?.enabled === false){
-                    newDisabled = true
-                }
-            });
-            setDisabled(newDisabled);
+    function addColor () {
+      const allCells = document.getElementsByClassName('clue-cell');
+      Object.values(allCells).forEach(cell => {
+        const background = cell.firstChild;
+        const letter = cell.lastChild;
+        if(letter.classList.contains('guess-text-incorrect')) {
+          background.setAttribute('stroke', 'rgba(var(--clr-other-error))');
+          background.classList.remove("correct");
+          background.classList.add("incorrect");
+        }else{
+          background.setAttribute('stroke', 'rgba(var(--clr-other-valid))');
+          background.classList.remove("incorrect");
+          background.classList.add("correct");
         }
-    }, [answers])
+      });
+    }
+
+    function reset() {
+      if(crossword && crossword.current) {
+        crossword.current.reset();
+        const allCells = document.getElementsByClassName('clue-cell');
+        Object.values(allCells).forEach(cell => {
+          const background = cell.firstChild;
+          background.classList.remove("incorrect");
+          background.classList.remove("correct");
+        });
+      }
+      localStorage.removeItem('game2');
+      const newFinish = {...finish};
+      newFinish.game2=false;
+      setFinish(newFinish);
+    }
+
+    function submit() {
+      if(crossword && crossword.current) {
+        addColor();
+        const newFinish = {...finish};
+        if(crossword.current.isCrosswordCorrect() ) {
+          setActive(true);
+          let numberFinish = 1;
+          Object.entries(finish).forEach(element => {
+              if(element[1] && element[0] !== 'game2'){
+                  numberFinish++
+              }
+          });
+          setHowManyFinished(numberFinish)
+          crossword.current.fillAllAnswers();
+        } else {
+          newFinish.game2 = false;
+        }
+        setFinish(newFinish);
+      }
+    }
+
+    function onCellChange(row, col, char) {
+      let alreadySaved = false;
+      save.forEach((element, key) => {
+        if(element[0] === row && element[1] === col){
+          save[key] = [row, col, char];
+          alreadySaved = true;
+        }
+      });
+      if(!alreadySaved) {
+        save.push([row, col, char]);
+      }
+      setSave(save);
+      localStorage.setItem('game2', JSON.stringify(save));
+    }
+
+    useEffect(() => {
+      if(localStorage.getItem('game2') !== null && save.length === 0) {
+        const newSave = JSON.parse(localStorage.getItem('game2'));
+        setSave(newSave);
+        setTimeout(() => {
+          newSave.forEach(element => {
+            crossword.current.setGuess((parseInt(element[0])), (parseInt(element[1])), element[2]);
+          });
+        }, 30);
+        setTimeout(() => {
+          if(finish.game2) {
+            addColor();
+          }
+        }, 50);
+      } 
+    }, [save.length, finish.game2])
+    
+    useEffect(() => {
+      if(crossword !== null && crossword.current !== null) {
+        const crosswordElement = document.getElementsByClassName('crossword grid')[0];
+        const mySVG = crosswordElement.firstChild.firstChild;
+        mySVG.setAttribute("viewBox", "0 0 162 212");
+      }  
+    }, [crossword])
 
     return (
         <>
             <TitlePage
-                main="Game 2"
-                title="Will you be able to find which skin is in which pack?"
-                rule="Connects the points corresponding to the skin and the packs."
+                main="Game 3"
+                title="Can you find each of the words hidden in this grid?"
+                rule="Read the definitions and try to find the associated words to complete the grid."
             />
             <BlockOfContent className='game2'>
-                <div ref={game2} className="game" onMouseUp={handleMouseUp} onMouseMove={handleMouseMove} >
-                    <div className="game-column">
-                        {images.map((image, key) => {
-                            return <Item key={key} side='L' id={image.id} image={image.image} onClick={handleImageClick}/>;
-                        })}
-                    </div>
-                    <div className="game-column">
-                        {packs.map((pack, key) => {
-                            return <Item key={key} side='R' id={pack.id} pack={pack.pack} onClick={handleImageClick}/>;
-                        })}
-                    </div>
-                    {answers !== null && Object.values(answers).map((answer, key) => {
-                        return <Line key={key} selectedImage={answer} startPosition={answer?.pointStart} endPosition={answer?.pointEnd} color={answer?.state} gameRef={game2}/>;
-                    })}
-                    <Line selectedImage={selectedImage} startPosition={startPosition} endPosition={endPosition} gameRef={game2}/>
-                </div>
-                <div className='buttons'>
-                    <Button text={'reset'} type="reset" onClick={reset}/>
-                    <Button text={'submit answer'} onClick={submit} disabled={disabled}/>
+              <div className='containGameplay'>
+                <Crossword
+                  data={data}
+                  ref={crossword}
+                  onCellChange={onCellChange}
+                  theme={{
+                    cellBackground: 'rgb(255,255,255)',
+                    focusBackground: 'rgb(var(--clr-background-secondary))'
+                  }}
+                />
+              </div>
+              <div className='containButtons'>
+                    <Button text={'Reset'} type="white_bg" onClick={reset}/>
+                    <Button text={'submit crossword'} onClick={submit}/>
                 </div>
             </BlockOfContent>
             <Modal active={active} setActive={setActive}>
                 <div className='titlePopup'>Congratulations !!!!!!!</div>
-                {finish !== null && <div className='textPopup'>{FinishedNUmber(finish)}</div>}
+                {finish !== null && <div className='textPopup'>{FinishedNUmber(howManyFinished)}</div>}
                 <div className='containButton'>
-                    <Button text={'let\'s go !!'} onClick={() => {setActive(!active); finishGame2();}}/>
+                    <Button text={'let\'s go !!'} onClick={() => {setActive(!active); finishGame3();}}/>
                 </div>
             </Modal>
         </>

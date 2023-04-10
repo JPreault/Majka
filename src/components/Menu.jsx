@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from '../images/jpg/happyBirthday.png'
-import { ReactComponent as Music } from '../images/svg/music.svg';
+import gift from '../images/gif/gift.gif';
 import { ReactComponent as Line } from '../images/svg/line.svg';
 import { ReactComponent as Pen } from '../images/svg/pen.svg';
 import { ReactComponent as Question } from '../images/svg/question.svg';
@@ -29,11 +29,22 @@ function Menu ()
         if(finish !== null){
             Object.values(finish).forEach(element => {
                 if(element === true){
-                    pourcentage = pourcentage+25;
+                    pourcentage++;
                 }
             });
         }
-        return pourcentage;
+        switch(pourcentage) {
+            case 0:
+                return 0;
+            case 1:
+                return 33;
+            case 2:
+                return 66;
+            case 3:
+                return 100;
+            default:
+                return 0;
+        }
     }
 
     function resetAll() {
@@ -41,8 +52,7 @@ function Menu ()
         setFinish({
             game1:false,
             game2:false,
-            game3:false,
-            game4:false
+            game3:false
         })
         setPage('/');
         navigate('/');
@@ -58,7 +68,7 @@ function Menu ()
                 <div className='title'>games</div>
                 <div className={'link' + (page === '/game1' ? ' selected' : '')} onClick={() => { navigateTo('/game1');}}>
                     <Icon type="svg">
-                        <Music/>
+                        <Line/>
                     </Icon>
                     <span className='textLink'>Game 1</span>
                     <Icon type="svg" className={"certified" + (finish?.game1 ? ' valid' : '')}>
@@ -67,7 +77,7 @@ function Menu ()
                 </div>
                 <div className={'link' + (page === '/game2' ? ' selected' : '')} onClick={() => { navigateTo('/game2');}}>
                     <Icon type="svg">
-                        <Line/>
+                        <Pen/>
                     </Icon>
                     <span className='textLink'>Game 2</span>
                     <Icon type="svg" className={"certified" + (finish?.game2 ? ' valid' : '')}>
@@ -76,19 +86,10 @@ function Menu ()
                 </div>
                 <div className={'link' + (page === '/game3' ? ' selected' : '')} onClick={() => { navigateTo('/game3');}}>
                     <Icon type="svg">
-                        <Pen/>
+                        <Question/>
                     </Icon>
                     <span className='textLink'>Game 3</span>
                     <Icon type="svg" className={"certified" + (finish?.game3 ? ' valid' : '')}>
-                        <Certified/>
-                    </Icon>
-                </div>
-                <div className={'link' + (page === '/game4' ? ' selected' : '')} onClick={() => { navigateTo('/game4');}}>
-                    <Icon type="svg">
-                        <Question/>
-                    </Icon>
-                    <span className='textLink'>Game 4</span>
-                    <Icon type="svg" className={"certified" + (finish?.game4 ? ' valid' : '')}>
                         <Certified/>
                     </Icon>
                 </div>
@@ -102,6 +103,9 @@ function Menu ()
                     <span className='textLink'>Colors</span>
                 </div>
             </div>
+            {finish?.game1 && finish?.game2 && finish?.game3 && <div className="menuTab">
+                <img className='surprise' alt='endSurprise' src={gift}/>
+            </div>}
         </div>
         <div className='bottomMenu'>
             <div className='title'>

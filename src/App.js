@@ -28,8 +28,7 @@ function App () {
             setFinish({
                 game1: false,
                 game2: false,
-                game3: false,
-                game4: false,
+                game3: false
             });
         }
     }, [])

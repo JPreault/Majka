@@ -1,0 +1,105 @@
+.blockOfContent.game1 {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4em;
+  .game {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+    gap: 20em;
+  
+    .game-column {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: fit-content;
+      gap: 0.7em;
+    }
+  
+    .line {
+      display: flex;
+      align-items: center;
+      gap: 0.8em;
+      width: fit-content;
+  
+      img {
+        width: 9em;
+        height: 5em;
+        object-fit: contain;
+        background-color: rgba(var(--clr-background-secondary));
+        padding: 0.8em;
+        border-radius: 0.5em;
+      }
+
+      .pack {
+        width: 14em;
+        height: 3em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(var(--clr-background-secondary));
+        padding: 0.8em;
+        border-radius: 0.5em;
+        margin: 1em 0;
+      }
+  
+      .point {
+        height: 1.2em;
+        width: 1.2em; 
+        background-color: rgba(var(--clr-background-secondary));
+        border-radius: 50%;
+      }
+    }
+  }
+
+  .buttons {
+    margin-left: auto;
+    display: flex;
+  }
+}
+
+.game-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+
+  circle {
+    stroke: rgba(var(--clr-background-theme));
+    fill: rgba(var(--clr-background-theme));
+    stroke-width: 0.1em;
+  }
+
+  line {
+    stroke: rgba(var(--clr-background-theme));
+    stroke-width: 0.2em;
+  }
+
+  &.false {
+    circle {
+      stroke: rgba(var(--clr-other-error));
+      fill: rgba(var(--clr-other-error));
+    }
+  
+    line {
+      stroke: rgba(var(--clr-other-error));
+    }
+  }
+
+  &.true {
+    circle {
+      stroke: rgba(var(--clr-other-valid));
+      fill: rgba(var(--clr-other-valid));
+    }
+  
+    line {
+      stroke: rgba(var(--clr-other-valid));
+    }
+  }
+
+}

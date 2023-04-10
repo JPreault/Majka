@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function Question ({question, answer1, answer2, answer3, answer4, name, error = [], updateSave}) {
+function Question ({question, answer1, answer2, answer3, answer4, name, error = [], finish, updateSave}) {
     const [state, setState] = useState('');
 
     useEffect(() => {
@@ -11,9 +11,13 @@ function Question ({question, answer1, answer2, answer3, answer4, name, error = 
                 setState('valid');
             }
         } else {
-            setState('');
+            if(finish) {
+                setState('valid');
+            } else {
+                setState('');
+            }
         }
-    }, [error,name])
+    }, [error,name, finish])
 
     function selectChild(id) {
         [1,2,3,4].forEach(element => {

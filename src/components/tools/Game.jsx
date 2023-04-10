@@ -2,7 +2,7 @@ import React from 'react';
 import Icon from './Icon';
 import { ReactComponent as Certified } from '../../images/svg/certified.svg';
 
-function Game ({title = null, state = false, image = null, onClick, children}) {
+function Game ({title = null, state = false, image = null, imageFinish, onClick, children}) {
 
     return (
       <div className='gameBlock'>
@@ -14,7 +14,7 @@ function Game ({title = null, state = false, image = null, onClick, children}) {
         </div>}
         {image !== null && <div className='containImageGame' onClick={onClick}>
           {!state && <div className='blur'></div>}
-          <img alt='title' src={image}></img>
+          <img alt='title' src={(!state ? image : imageFinish)}></img>
           <div className='border'></div>
         </div>}
         {children}
